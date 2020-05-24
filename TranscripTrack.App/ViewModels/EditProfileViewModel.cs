@@ -19,7 +19,7 @@ namespace TranscripTrack.UI.ViewModels
 
 
         public ProfileModel Model { get; private set; }
-        public string Title { get; private set; }
+        //public string Title { get; private set; }
 
         public EditProfileViewModel(bool isAdd)
         {

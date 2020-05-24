@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranscripTrack.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding Title}" Height="450" Width="800">
     <Grid>
-        <Button Content="Add New Profile" Height="60" Width="120" Click="Button_Click"></Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="150" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0"  Name="profileSelectButton" Content="Select A Profile" Height="60" Width="120" ></Button>
+        <Button Grid.Row="1" Name="addProfileButton" Content="Add A Profile" Height="60" Width="120" ></Button>
     </Grid>
 </Window>

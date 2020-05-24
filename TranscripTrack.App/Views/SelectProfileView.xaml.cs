@@ -34,7 +34,12 @@ namespace TranscripTrack.UI.Views
         {
             if (profileSelectTable.SelectedItem is ProfileSelectTableModel selectedProfile)
             {
-                MessageBox.Show(selectedProfile.Name);
+                Properties.UserSettings.Default.CurrentProfileId = selectedProfile.ProfileId;
+                Properties.UserSettings.Default.Save();
+
+
+
+                this.Close();
             }
 
         }

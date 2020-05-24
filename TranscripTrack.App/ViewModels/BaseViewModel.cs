@@ -7,6 +7,15 @@ namespace TranscripTrack.UI.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
+        protected string title;
+        public string Title {
+            get => title;
+            set {
+                title = value;
+                OnPropertyChanged("Title");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {

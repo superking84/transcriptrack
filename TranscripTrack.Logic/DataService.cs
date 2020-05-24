@@ -37,6 +37,22 @@ namespace TranscripTrack.Logic
             }
         }
 
+        public static async Task<bool> ProfileExistsAsync(int id)
+        {
+            using (var db = new TrackerDbContext())
+            {
+                return (await db.Profiles.FindAsync(id)) is Profile;
+            }
+        }
+
+        public static async Task<Profile> GetProfileAsync(int profileId)
+        {
+            using (var db = new TrackerDbContext())
+            {
+                return await db.Profiles.FindAsync(profileId);
+            }
+        }
+
         public static async Task<List<ProfileSelectTableModel>> GetProfilesAsync()
         {
             using (var db = new TrackerDbContext())
