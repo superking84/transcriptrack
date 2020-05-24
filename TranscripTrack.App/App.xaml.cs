@@ -13,5 +13,6 @@ namespace TranscripTrack.UI
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

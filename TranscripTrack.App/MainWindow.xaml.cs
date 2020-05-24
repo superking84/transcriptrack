@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TranscripTrack.UI.Views;
 
 namespace TranscripTrack.UI
 {
@@ -23,6 +24,14 @@ namespace TranscripTrack.UI
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //var addProfilePage = new EditProfileView();
+            //addProfilePage.Show();
+            var profileSelectPage = new SelectProfileView();
+            profileSelectPage.Show();
         }
     }
 }

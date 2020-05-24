@@ -1,0 +1,23 @@
+﻿<Window x:Class="TranscripTrack.UI.Views.SelectProfileView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TranscripTrack.UI.Views"
+        mc:Ignorable="d"
+        Title="SelectProfileView" Height="300" Width="400" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListView Name="profileSelectTable" SelectionMode="Single" Grid.Row="0" ItemsSource="{Binding Profiles}" Width="250">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Client" Width="Auto" DisplayMemberBinding="{Binding Client}" />
+                    <GridViewColumn Header="Currency" Width="Auto" DisplayMemberBinding="{Binding CurrencyCode}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
