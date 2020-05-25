@@ -11,9 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
-using TranscripTrack.UI.ViewModels;
+using TranscripTrack.App.ViewModels;
 
-namespace TranscripTrack.UI.Views
+namespace TranscripTrack.App.Views
 {
     /// <summary>
     /// Interaction logic for SelectProfileView.xaml

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranscripTrack.UI", "TranscripTrack.App\TranscripTrack.UI.csproj", "{CE9AFFBC-CA55-4887-BB1D-BBCB8EC4F745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranscripTrack.App", "TranscripTrack.App\TranscripTrack.App.csproj", "{CE9AFFBC-CA55-4887-BB1D-BBCB8EC4F745}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranscripTrack.Data", "TranscripTrack.Data\TranscripTrack.Data.csproj", "{A6463B7E-E022-45CA-AAEE-C13243D3F9DE}"
 EndProject

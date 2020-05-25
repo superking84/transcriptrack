@@ -1,7 +1,7 @@
-﻿<Application x:Class="TranscripTrack.UI.App"
+﻿<Application x:Class="TranscripTrack.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TranscripTrack.UI"
+             xmlns:local="clr-namespace:TranscripTrack.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

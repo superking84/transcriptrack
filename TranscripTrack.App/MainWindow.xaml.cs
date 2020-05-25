@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using TranscripTrack.Logic;
-using TranscripTrack.UI.ViewModels;
-using TranscripTrack.UI.Views;
+using TranscripTrack.App.ViewModels;
+using TranscripTrack.App.Views;
 
-namespace TranscripTrack.UI
+namespace TranscripTrack.App
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

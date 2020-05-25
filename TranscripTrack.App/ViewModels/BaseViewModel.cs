@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace TranscripTrack.UI.ViewModels
+namespace TranscripTrack.App.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

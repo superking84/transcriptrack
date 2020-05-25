@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using TranscripTrack.UI.ViewModels;
+using TranscripTrack.App.ViewModels;
 
-namespace TranscripTrack.UI.Views
+namespace TranscripTrack.App.Views
 {
     /// <summary>
     /// Interaction logic for EditProfileView.xaml

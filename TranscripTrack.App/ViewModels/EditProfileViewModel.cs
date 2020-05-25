@@ -4,7 +4,7 @@ using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
 using TranscripTrack.Logic;
 
-namespace TranscripTrack.UI.ViewModels
+namespace TranscripTrack.App.ViewModels
 {
     public class EditProfileViewModel : BaseViewModel
     {

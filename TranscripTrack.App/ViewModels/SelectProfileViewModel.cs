@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TranscripTrack.Data.Models;
 using TranscripTrack.Logic;
 
-namespace TranscripTrack.UI.ViewModels
+namespace TranscripTrack.App.ViewModels
 {
     public class SelectProfileViewModel : BaseViewModel
     {
