@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
 using TranscripTrack.App.ViewModels;
+using System.Configuration;
+using System.ComponentModel;
 
 namespace TranscripTrack.App.Views
 {
@@ -20,14 +22,26 @@ namespace TranscripTrack.App.Views
     /// </summary>
     public partial class SelectProfileView : Window
     {
+        public event EventHandler CloseEvent;
+        protected void OnCloseEvent()
+        {
+            CloseEvent?.Invoke(this, EventArgs.Empty);
+        }
+
         public SelectProfileView()
         {
             InitializeComponent();
 
             DataContext = new SelectProfileViewModel();
 
-            Loaded += SelectProfileView_Loaded;
+            Loaded += SelectProfileView_LoadedAsync;
+            Unloaded += new RoutedEventHandler(SelectProfileView_Unloaded);
             profileSelectTable.MouseDoubleClick += ProfileSelectTable_MouseDoubleClick;
+        }
+
+        private void SelectProfileView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            OnCloseEvent();
         }
 
         private void ProfileSelectTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -37,14 +51,11 @@ namespace TranscripTrack.App.Views
                 Properties.UserSettings.Default.CurrentProfileId = selectedProfile.ProfileId;
                 Properties.UserSettings.Default.Save();
 
-
-
                 this.Close();
             }
-
         }
 
-        private async void SelectProfileView_Loaded(object sender, RoutedEventArgs e)
+        private async void SelectProfileView_LoadedAsync(object sender, RoutedEventArgs e)
         {
             await (DataContext as SelectProfileViewModel).InitializeAsync();
         }

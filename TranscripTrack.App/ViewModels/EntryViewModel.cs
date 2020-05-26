@@ -9,8 +9,14 @@ namespace TranscripTrack.App.ViewModels
 {
     public class EntryViewModel : BaseViewModel
     {
-        public int ProfileId { get; set; }
-        //public string Title { get; set; }
+        private int profileId;
+        public int ProfileId {
+            get => profileId;
+            set {
+                profileId = value;
+                OnPropertyChanged("ProfileId");
+            }
+        }
 
         private Profile profile;
         public Profile Profile {
@@ -39,12 +45,26 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        protected override async void OnPropertyChanged(string propertyName)
+        {
+            base.OnPropertyChanged(propertyName);
 
-        public async Task InitializeAsync()
+            if (propertyName == "ProfileId")
+            {
+                await LoadProfileAsync();
+            }
+        }
+
+        private async Task LoadProfileAsync()
         {
             Profile = await DataService.GetProfileAsync(ProfileId);
 
             Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+        }
+
+        public async Task InitializeAsync()
+        {
+            await LoadProfileAsync();
         }
     }
 }
