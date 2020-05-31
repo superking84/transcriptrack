@@ -22,20 +22,11 @@ namespace TranscripTrack.App.Views
     /// </summary>
     public partial class SelectProfileView : Window
     {
-        private SelectProfileViewModel viewModel;
-
         public SelectProfileView()
         {
-            DataContext = viewModel = new SelectProfileViewModel();
+            DataContext = new SelectProfileViewModel();
 
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-
-            viewModel.InitializeCommand.Execute(null);
         }
     }
 }

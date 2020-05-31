@@ -19,20 +19,11 @@ namespace TranscripTrack.App.Views
     /// </summary>
     public partial class MainView : UserControl
     {
-        private MainViewModel viewModel;
-
         public MainView()
         {
-            DataContext = viewModel = new MainViewModel();
+            DataContext = new MainViewModel();
 
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-
-            viewModel.InitializeCommand.Execute(null);
         }
     }
 }

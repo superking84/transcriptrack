@@ -13,13 +13,11 @@ namespace TranscripTrack.App.ViewModels
     {
         public RelayCommand SelectProfileCommand { get; private set; }
         public RelayCommand AddProfileCommand { get; private set; }
-        public RelayCommand InitializeCommand { get; private set; }
-
+        
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
-            InitializeCommand = new RelayCommand(InitializeAsync);
         }
 
         private int profileId;
@@ -58,7 +56,7 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        public async Task LoadProfileAsync()
+        public async Task LoadCurrentProfileAsync()
         {
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await DataService.GetProfileAsync(ProfileId);
@@ -66,9 +64,9 @@ namespace TranscripTrack.App.ViewModels
             Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
         }
 
-        public async void InitializeAsync()
+        public override async void OnLoaded(object sender, EventArgs e)
         {
-            await LoadProfileAsync();
+            await LoadCurrentProfileAsync();
         }
 
         private void OpenSelectProfileModal()
@@ -82,13 +80,23 @@ namespace TranscripTrack.App.ViewModels
         {
             if (ProfileId != Properties.UserSettings.Default.CurrentProfileId)
             {
-                await LoadProfileAsync();
+                await LoadCurrentProfileAsync();
+            }
+        }
+
+        private async void OnAddProfileClosed(object sender, EventArgs e)
+        {
+            if (ProfileId != Properties.UserSettings.Default.CurrentProfileId)
+            {
+                await LoadCurrentProfileAsync();
             }
         }
 
         private void OpenAddProfileModal()
         {
-            (new EditProfileView()).ShowDialog();
+            var addProfileView = new EditProfileView(true);
+            addProfileView.Closed += new EventHandler(OnAddProfileClosed);
+            addProfileView.ShowDialog();
         }
 
     }

@@ -21,5 +21,7 @@ namespace TranscripTrack.App.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public abstract void OnLoaded(object sender, EventArgs e);
     }
 }

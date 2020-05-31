@@ -14,12 +14,10 @@ namespace TranscripTrack.App.ViewModels
 {
     public class SelectProfileViewModel : BaseViewModel
     {
-        public RelayCommand InitializeCommand { get; private set; }
         public RelayCommand<Window> ItemSelectCommand { get; set; }
 
         public SelectProfileViewModel()
         {
-            InitializeCommand = new RelayCommand(InitializeAsync);
             ItemSelectCommand = new RelayCommand<Window>(SelectProfileAsync, CanSelectProfile);
         }
 
@@ -47,7 +45,7 @@ namespace TranscripTrack.App.ViewModels
         }
         public ProfileSelectTableModel SelectedProfile { get; set; }
 
-        public async void InitializeAsync()
+        public override async void OnLoaded(object sender, EventArgs e)
         {
             Profiles = await DataService.GetProfilesAsync();
         }
