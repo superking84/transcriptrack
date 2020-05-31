@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
 using TranscripTrack.Logic;
@@ -8,6 +11,8 @@ namespace TranscripTrack.App.ViewModels
 {
     public class EditProfileViewModel : BaseViewModel
     {
+        public RelayCommand<Window> SaveCommand { get; set; }
+
         private List<Currency> currencies;
         public List<Currency> Currencies {
             get => currencies;
@@ -17,25 +22,44 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-
         public ProfileModel Model { get; private set; }
-        //public string Title { get; private set; }
-
+        
         public EditProfileViewModel(bool isAdd)
         {
             Title = isAdd ? "Add New Profile" : "Edit Profile";
 
+            if (isAdd)
+            {
+                SaveCommand = new RelayCommand<Window>(SaveNewProfileAsync, CanSaveNewProfile);
+            }
+            else
+            {
+                //??????
+            }
             Model = new ProfileModel();
         }
 
-        public async Task InitializeAsync()
+        private async void SaveNewProfileAsync(Window window)
         {
-            Currencies = await DataService.GetCurrenciesAsync();
+            var profileId = await DataService.AddProfileAsync(Model);
+            
+            Properties.UserSettings.Default.CurrentProfileId = profileId;
+            Properties.UserSettings.Default.Save();
+
+            window?.Close();
         }
 
-        public async Task AddProfileAsync()
+        // will implement cleaner validation later
+        private bool CanSaveNewProfile(Window window)
         {
-            await DataService.AddProfileAsync(Model);
+            return !string.IsNullOrWhiteSpace(Model.Name) &&
+                !string.IsNullOrWhiteSpace(Model.Client) &&
+                Model.CurrencyId != default;
+        }
+
+        public override async void OnLoaded(object sender, EventArgs e)
+        {
+            Currencies = await DataService.GetCurrenciesAsync();
         }
     }
 }

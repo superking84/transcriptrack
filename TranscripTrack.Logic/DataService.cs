@@ -20,7 +20,7 @@ namespace TranscripTrack.Logic
             }
         }
 
-        public static async Task AddProfileAsync(ProfileModel model)
+        public static async Task<int> AddProfileAsync(ProfileModel model)
         {
             using (var db = new TrackerDbContext())
             {
@@ -34,6 +34,8 @@ namespace TranscripTrack.Logic
                 await db.Profiles.AddAsync(profile);
 
                 await db.SaveChangesAsync();
+
+                return profile.ProfileId;
             }
         }
 
