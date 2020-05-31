@@ -1,10 +1,8 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using TranscripTrack.App.Views;
 using TranscripTrack.Data;
 using TranscripTrack.Logic;
@@ -13,9 +11,9 @@ namespace TranscripTrack.App.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public ICommand SelectProfileCommand { get; set; }
-        public ICommand AddProfileCommand { get; set; }
-        public ICommand InitializeCommand { get; set; }
+        public RelayCommand SelectProfileCommand { get; private set; }
+        public RelayCommand AddProfileCommand { get; private set; }
+        public RelayCommand InitializeCommand { get; private set; }
 
         public MainViewModel()
         {
@@ -76,8 +74,16 @@ namespace TranscripTrack.App.ViewModels
         private void OpenSelectProfileModal()
         {
             var selectProfileView = new SelectProfileView();
-            selectProfileView.CloseEvent += new EventHandler(async (sender, e) => await LoadProfileAsync());
+            selectProfileView.Closed += new EventHandler(OnSelectProfileClosed);
             selectProfileView.ShowDialog();
+        }
+
+        private async void OnSelectProfileClosed(object sender, EventArgs e)
+        {
+            if (ProfileId != Properties.UserSettings.Default.CurrentProfileId)
+            {
+                await LoadProfileAsync();
+            }
         }
 
         private void OpenAddProfileModal()

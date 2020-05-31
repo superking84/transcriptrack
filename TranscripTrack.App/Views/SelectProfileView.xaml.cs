@@ -22,43 +22,20 @@ namespace TranscripTrack.App.Views
     /// </summary>
     public partial class SelectProfileView : Window
     {
-        public event EventHandler CloseEvent;
-        protected void OnCloseEvent()
-        {
-            CloseEvent?.Invoke(this, EventArgs.Empty);
-        }
+        private SelectProfileViewModel viewModel;
 
         public SelectProfileView()
         {
+            DataContext = viewModel = new SelectProfileViewModel();
+
             InitializeComponent();
-
-            DataContext = new SelectProfileViewModel();
-
-            Loaded += SelectProfileView_LoadedAsync;
-            Unloaded += new RoutedEventHandler(SelectProfileView_Unloaded);
-            profileSelectTable.MouseDoubleClick += ProfileSelectTable_MouseDoubleClick;
         }
 
-        private void SelectProfileView_Unloaded(object sender, RoutedEventArgs e)
+        protected override void OnInitialized(EventArgs e)
         {
-            OnCloseEvent();
+            base.OnInitialized(e);
+
+            viewModel.InitializeCommand.Execute(null);
         }
-
-        private void ProfileSelectTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (profileSelectTable.SelectedItem is ProfileSelectTableModel selectedProfile)
-            {
-                Properties.UserSettings.Default.CurrentProfileId = selectedProfile.ProfileId;
-                Properties.UserSettings.Default.Save();
-
-                this.Close();
-            }
-        }
-
-        private async void SelectProfileView_LoadedAsync(object sender, RoutedEventArgs e)
-        {
-            await (DataContext as SelectProfileViewModel).InitializeAsync();
-        }
-
     }
 }
