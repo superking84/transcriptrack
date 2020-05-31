@@ -11,13 +11,13 @@ using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
-    public class EntryViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
         public ICommand SelectProfileCommand { get; set; }
         public ICommand AddProfileCommand { get; set; }
         public ICommand InitializeCommand { get; set; }
 
-        public EntryViewModel()
+        public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
@@ -65,7 +65,7 @@ namespace TranscripTrack.App.ViewModels
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await DataService.GetProfileAsync(ProfileId);
 
-            Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+            Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
         }
 
         public async void InitializeAsync()

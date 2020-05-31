@@ -9,20 +9,9 @@ namespace TranscripTrack.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        private EntryViewModel viewModel;
-
         public MainWindow()
         {
-            DataContext = viewModel = new EntryViewModel();
-            
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-
-            viewModel.InitializeCommand.Execute(null);
         }
     }
 }
