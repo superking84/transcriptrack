@@ -1,7 +1,11 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using TranscripTrack.App.Views;
 using TranscripTrack.Data;
 using TranscripTrack.Logic;
 
@@ -9,6 +13,17 @@ namespace TranscripTrack.App.ViewModels
 {
     public class EntryViewModel : BaseViewModel
     {
+        public ICommand SelectProfileCommand { get; set; }
+        public ICommand AddProfileCommand { get; set; }
+        public ICommand InitializeCommand { get; set; }
+
+        public EntryViewModel()
+        {
+            SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
+            AddProfileCommand = new RelayCommand(OpenAddProfileModal);
+            InitializeCommand = new RelayCommand(InitializeAsync);
+        }
+
         private int profileId;
         public int ProfileId {
             get => profileId;
@@ -45,26 +60,30 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        protected override async void OnPropertyChanged(string propertyName)
+        public async Task LoadProfileAsync()
         {
-            base.OnPropertyChanged(propertyName);
-
-            if (propertyName == "ProfileId")
-            {
-                await LoadProfileAsync();
-            }
-        }
-
-        private async Task LoadProfileAsync()
-        {
+            ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await DataService.GetProfileAsync(ProfileId);
 
             Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
         }
 
-        public async Task InitializeAsync()
+        public async void InitializeAsync()
         {
             await LoadProfileAsync();
         }
+
+        private void OpenSelectProfileModal()
+        {
+            var selectProfileView = new SelectProfileView();
+            selectProfileView.CloseEvent += new EventHandler(async (sender, e) => await LoadProfileAsync());
+            selectProfileView.ShowDialog();
+        }
+
+        private void OpenAddProfileModal()
+        {
+            (new EditProfileView()).ShowDialog();
+        }
+
     }
 }
