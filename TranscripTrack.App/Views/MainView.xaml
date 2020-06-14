@@ -26,15 +26,20 @@
                 </b:EventTrigger>
             </b:Interaction.Triggers>
         </DatePicker>
-        <ListView Name="profileSelectTable" SelectionMode="Single" Grid.Row="1" ItemsSource="{Binding LineRateEntries}" Width="320">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Line Type" Width="100" DisplayMemberBinding="{Binding LineRateType}" />
-                    <GridViewColumn Header="# Lines" Width="100" DisplayMemberBinding="{Binding NumLines}" />
-                    <GridViewColumn Header="Entered On" Width="120" DisplayMemberBinding="{Binding EnteredDate}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Grid.Row="1" Width="320" 
+                  SelectionMode="Single" ItemsSource="{Binding LineRateEntries}" SelectedItem="{Binding SelectedLineRateEntry}"
+                  IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditLineRateEntryCommand}" />
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Line Type" Width="80" Binding="{Binding LineRateType}" />
+                <DataGridTextColumn Header="# Lines" Width="50" Binding="{Binding NumLines}" />
+                <DataGridTextColumn Header="Entered On" Width="70" Binding="{Binding EnteredDate, StringFormat=d}" />
+                <DataGridTextColumn Header="Amount" Width="120" Binding="{Binding AmountEarned, StringFormat=C}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
         <Button Grid.Row="2" Grid.Column="0" Command="{Binding AddLineRateEntryCommand}" Content="Add" Height="30" Width="60" />
         <Button Grid.Row="3" Grid.Column="1" Command="{Binding AddProfileCommand}"
                 Name="addProfileButton" Content="Add A Profile" Height="30" Width="60" />

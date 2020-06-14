@@ -53,6 +53,7 @@ namespace TranscripTrack.Logic
                 {
                     var existingModel = await db.LineRateEntries.FindAsync(model.LineRateEntryId);
 
+                    existingModel.LineRateId = model.LineRateId;
                     existingModel.NumLines = model.NumLines;
                 }
                 else
@@ -135,7 +136,8 @@ namespace TranscripTrack.Logic
                                   LineRateEntryId = lre.LineRateEntryId,
                                   LineRateType = lr.Description,
                                   NumLines = lre.NumLines,
-                                  EnteredDate = lre.EnteredDate
+                                  EnteredDate = lre.EnteredDate,
+                                  AmountEarned = lre.NumLines * lr.Rate / 100
                               }).ToListAsync();
             }
         }

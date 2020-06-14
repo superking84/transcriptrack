@@ -10,5 +10,6 @@ namespace TranscripTrack.Data.Models
         public string LineRateType { get; set; }
         public int NumLines { get; set; }
         public DateTime EnteredDate { get; set; }
+        public decimal AmountEarned { get; set; }
     }
 }

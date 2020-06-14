@@ -14,7 +14,7 @@ namespace TranscripTrack.App.ViewModels
     {
         private readonly bool isAdd;
         private readonly int? lineRateEntryId;
-        //private readonly DateTime selectedDate;
+        
         public RelayCommand<Window> SaveCommand { get; private set; }
 
         private List<LineRate> lineRates;
@@ -26,7 +26,14 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        public LineRateEntryEditModel Model { get; private set; }
+        private LineRateEntryEditModel model;
+        public LineRateEntryEditModel Model {
+            get => model;
+            set {
+                model = value;
+                OnPropertyChanged("Model");
+            }
+        }
 
         public EditLineRateEntryViewModel(DateTime selectedDate, int? lineRateEntryId)
         {

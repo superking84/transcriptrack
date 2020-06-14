@@ -17,15 +17,21 @@ namespace TranscripTrack.App.ViewModels
         private EditProfileView editProfileView;
         private SelectProfileView selectProfileView;
 
+        private readonly EventHandler editLineRateEntryClosedHandler;
+
         public RelayCommand SelectProfileCommand { get; private set; }
         public RelayCommand AddProfileCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
+        public RelayCommand EditLineRateEntryCommand { get; private set; }
 
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
+            EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanEditLineRateEntry);
+
+            editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
         }
 
         private int profileId;
@@ -64,6 +70,15 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        private LineRateEntryTableModel selectedLineRateEntry;
+        public LineRateEntryTableModel SelectedLineRateEntry {
+            get => selectedLineRateEntry;
+            set {
+                selectedLineRateEntry = value;
+                OnPropertyChanged("SelectedLineRateEntry");
+            }
+        }
+
         private DateTime lineEntryDate;
         public DateTime LineEntryDate {
             get => lineEntryDate;
@@ -83,9 +98,10 @@ namespace TranscripTrack.App.ViewModels
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
-            await LoadCurrentProfileAsync();
-
             LineEntryDate = DateTime.Today;
+
+            await LoadCurrentProfileAsync();
+            await LoadLineRateEntriesAsync();
         }
 
         public async void OnEntryDateChanged(object sender, SelectionChangedEventArgs e)
@@ -140,10 +156,24 @@ namespace TranscripTrack.App.ViewModels
         private void OpenAddLineEntryModal()
         {
             editLineRateEntryView = new EditLineRateEntryView(LineEntryDate, null);
-            editLineRateEntryView.Closed += new EventHandler(OnEditLineRateEntryClosed);
+            editLineRateEntryView.Closed += editLineRateEntryClosedHandler;
             editLineRateEntryView.ShowDialog();
 
             GC.Collect();
+        }
+
+        private void OpenEditLineRateEntryModal()
+        {
+            editLineRateEntryView = new EditLineRateEntryView(SelectedLineRateEntry.EnteredDate, SelectedLineRateEntry.LineRateEntryId);
+            editLineRateEntryView.Closed += editLineRateEntryClosedHandler;
+            editLineRateEntryView.ShowDialog();
+
+            GC.Collect();
+        }
+
+        private bool CanEditLineRateEntry()
+        {
+            return SelectedLineRateEntry is LineRateEntryTableModel;
         }
     }
 }
