@@ -11,6 +11,6 @@ namespace TranscripTrack.Data
         public int ProfileId { get; set; }
         public Profile Profile { get; set; }
 
-        public List<LineRateEntry> LineRateEntries { get; } = new List<LineRateEntry>();
+        public List<LineRateEntry> LineRateEntries { get; set; }
     }
 }

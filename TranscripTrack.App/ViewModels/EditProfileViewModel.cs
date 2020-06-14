@@ -11,6 +11,7 @@ namespace TranscripTrack.App.ViewModels
 {
     public class EditProfileViewModel : BaseViewModel
     {
+        private readonly bool isAdd;
         public RelayCommand<Window> SaveCommand { get; set; }
 
         private List<Currency> currencies;
@@ -24,8 +25,10 @@ namespace TranscripTrack.App.ViewModels
 
         public ProfileModel Model { get; private set; }
         
-        public EditProfileViewModel(bool isAdd)
+        public EditProfileViewModel(int? profileId)
         {
+            isAdd = !profileId.HasValue;
+
             Title = isAdd ? "Add New Profile" : "Edit Profile";
 
             if (isAdd)

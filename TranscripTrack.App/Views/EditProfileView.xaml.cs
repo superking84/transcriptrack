@@ -8,9 +8,9 @@ namespace TranscripTrack.App.Views
     /// </summary>
     public partial class EditProfileView : Window
     {
-        public EditProfileView(bool isAdd)
+        public EditProfileView(int? profileId)
         {
-            DataContext = new EditProfileViewModel(isAdd);
+            DataContext = new EditProfileViewModel(profileId);
 
             InitializeComponent();
         }

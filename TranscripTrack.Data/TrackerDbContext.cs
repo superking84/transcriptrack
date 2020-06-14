@@ -22,5 +22,15 @@ namespace TranscripTrack.Data
         {
             optionsBuilder.UseSqlite($"Data Source={dbLocation}");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<LineRateEntry>()
+                .HasOne(lre => lre.LineRate)
+                .WithMany(lr => lr.LineRateEntries)
+                .HasForeignKey(lre => lre.LineRateId);
+        }
     }
 }

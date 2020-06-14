@@ -1,0 +1,46 @@
+﻿<Window x:Class="TranscripTrack.App.Views.EditLineRateEntryView"
+        x:Name="EditLineRateEntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="{Binding Title}" Height="200" Width="300">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoaded" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75" />
+            <ColumnDefinition Width="250" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"
+               Content="Line Type"  />
+        <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"
+                  ItemsSource="{Binding Path=LineRates}" SelectedValuePath="LineRateId" SelectedValue="{Binding Path=Model.LineRateId}" 
+                  DisplayMemberPath="Description" />
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" 
+               Content="# Lines" />
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"
+                 Text="{Binding Path=Model.NumLinesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="PreviewTextInput">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="OnPreviewTextInput" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+        </TextBox>
+
+        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" 
+                Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditLineRateEntryWindow}"/>
+    </Grid>
+</Window>

@@ -3,21 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using TranscripTrack.App.Views;
 using TranscripTrack.Data;
+using TranscripTrack.Data.Models;
 using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private EditLineRateEntryView editLineRateEntryView;
+        private EditProfileView editProfileView;
+        private SelectProfileView selectProfileView;
+
         public RelayCommand SelectProfileCommand { get; private set; }
         public RelayCommand AddProfileCommand { get; private set; }
-        
+        public RelayCommand AddLineRateEntryCommand { get; private set; }
+
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
+            AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
         }
 
         private int profileId;
@@ -47,12 +55,21 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private List<LineRateEntry> lineRateEntries;
-        public List<LineRateEntry> LineRateEntries {
+        private List<LineRateEntryTableModel> lineRateEntries;
+        public List<LineRateEntryTableModel> LineRateEntries {
             get => lineRateEntries;
             set {
                 lineRateEntries = value;
                 OnPropertyChanged("LineRateEntries");
+            }
+        }
+
+        private DateTime lineEntryDate;
+        public DateTime LineEntryDate {
+            get => lineEntryDate;
+            set {
+                lineEntryDate = value;
+                OnPropertyChanged("LineEntryDate");
             }
         }
 
@@ -67,13 +84,27 @@ namespace TranscripTrack.App.ViewModels
         public override async void OnLoaded(object sender, EventArgs e)
         {
             await LoadCurrentProfileAsync();
+
+            LineEntryDate = DateTime.Today;
+        }
+
+        public async void OnEntryDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            await LoadLineRateEntriesAsync();
+        }
+
+        private async Task LoadLineRateEntriesAsync()
+        {
+            LineRateEntries = await DataService.GetLineRateEntriesAsync(LineEntryDate, ProfileId);
         }
 
         private void OpenSelectProfileModal()
         {
-            var selectProfileView = new SelectProfileView();
+            selectProfileView = new SelectProfileView();
             selectProfileView.Closed += new EventHandler(OnSelectProfileClosed);
             selectProfileView.ShowDialog();
+
+            GC.Collect();
         }
 
         private async void OnSelectProfileClosed(object sender, EventArgs e)
@@ -92,12 +123,27 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private void OpenAddProfileModal()
+        private async void OnEditLineRateEntryClosed(object sender, EventArgs e)
         {
-            var addProfileView = new EditProfileView(true);
-            addProfileView.Closed += new EventHandler(OnAddProfileClosed);
-            addProfileView.ShowDialog();
+            await LoadLineRateEntriesAsync();
         }
 
+        private void OpenAddProfileModal()
+        {
+            editProfileView = new EditProfileView(null);
+            editProfileView.Closed += new EventHandler(OnAddProfileClosed);
+            editProfileView.ShowDialog();
+
+            GC.Collect();
+        }
+
+        private void OpenAddLineEntryModal()
+        {
+            editLineRateEntryView = new EditLineRateEntryView(LineEntryDate, null);
+            editLineRateEntryView.Closed += new EventHandler(OnEditLineRateEntryClosed);
+            editLineRateEntryView.ShowDialog();
+
+            GC.Collect();
+        }
     }
 }

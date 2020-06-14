@@ -15,23 +15,31 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
             <RowDefinition Height="150" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="2" Grid.Column="1" Command="{Binding AddProfileCommand}"
-                Name="addProfileButton" Content="Add A Profile" Height="30" Width="60" />
-
-        <Button Grid.Row="2" Grid.Column="0"
-                Command="{Binding SelectProfileCommand}" Content="Select A Profile" Height="30" Width="60" Margin="349,115,391,5" />
-        <DatePicker Name="lineEntryDatePicker" Grid.Row="0" HorizontalAlignment="Center"></DatePicker>
-        <ListView Name="profileSelectTable" SelectionMode="Single" Grid.Row="1" ItemsSource="{Binding LineEntries}" Width="320">
+        <DatePicker Name="lineEntryDatePicker" SelectedDate="{Binding LineEntryDate}" Grid.Row="0" HorizontalAlignment="Center">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="SelectedDateChanged">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="OnEntryDateChanged" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+        </DatePicker>
+        <ListView Name="profileSelectTable" SelectionMode="Single" Grid.Row="1" ItemsSource="{Binding LineRateEntries}" Width="320">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Line Type" Width="100" DisplayMemberBinding="{Binding LineRate.Description}" />
+                    <GridViewColumn Header="Line Type" Width="100" DisplayMemberBinding="{Binding LineRateType}" />
                     <GridViewColumn Header="# Lines" Width="100" DisplayMemberBinding="{Binding NumLines}" />
                     <GridViewColumn Header="Entered On" Width="120" DisplayMemberBinding="{Binding EnteredDate}" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Grid.Row="2" Grid.Column="0" Command="{Binding AddLineRateEntryCommand}" Content="Add" Height="30" Width="60" />
+        <Button Grid.Row="3" Grid.Column="1" Command="{Binding AddProfileCommand}"
+                Name="addProfileButton" Content="Add A Profile" Height="30" Width="60" />
+
+        <Button Grid.Row="3" Grid.Column="0"
+                Command="{Binding SelectProfileCommand}" Content="Select A Profile" Height="30" Width="60" Margin="349,115,391,5" />
     </Grid>
 </UserControl>
