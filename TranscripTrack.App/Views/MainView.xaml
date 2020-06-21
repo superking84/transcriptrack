@@ -31,6 +31,7 @@
                   IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditLineRateEntryCommand}" />
+                <KeyBinding Key="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
             </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Line Type" Width="80" Binding="{Binding LineRateType}" />

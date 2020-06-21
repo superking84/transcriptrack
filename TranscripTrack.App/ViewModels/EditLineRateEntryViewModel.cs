@@ -72,6 +72,14 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        public void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
         private bool CanSave(Window window)
         {
             return IsInputValid(Model.NumLinesText);

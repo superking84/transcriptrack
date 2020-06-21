@@ -14,7 +14,7 @@ namespace TranscripTrack.Data.Models
         public string NumLinesText {
             get => numLinesText;
             set {
-                if (int.TryParse(value, out int _)){
+                if (string.IsNullOrEmpty(value) || int.TryParse(value, out int _)){
                     numLinesText = value;
                     OnPropertyChanged("NumLinesText");
                 }

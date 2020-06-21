@@ -23,15 +23,33 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand AddProfileCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
+        public RelayCommand DeleteLineRateEntryCommand { get; private set; }
 
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
-            EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanEditLineRateEntry);
+            EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
+            DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
+        }
+
+        private async void ConfirmDeleteLineRateEntry()
+        {
+            var response = MessageBox.Show(
+                "Delete this record?  This action cannot be undone.", 
+                "Delete", 
+                MessageBoxButton.OKCancel, 
+                MessageBoxImage.Warning
+            );
+
+            if (response == MessageBoxResult.OK)
+            {
+                await DataService.DeleteLineRateEntryAsync(SelectedLineRateEntry.LineRateEntryId);
+                await LoadLineRateEntriesAsync();
+            }
         }
 
         private int profileId;
@@ -94,14 +112,15 @@ namespace TranscripTrack.App.ViewModels
             Profile = await DataService.GetProfileAsync(ProfileId);
 
             Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+
+            await LoadLineRateEntriesAsync();
         }
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
             LineEntryDate = DateTime.Today;
-
+            
             await LoadCurrentProfileAsync();
-            await LoadLineRateEntriesAsync();
         }
 
         public async void OnEntryDateChanged(object sender, SelectionChangedEventArgs e)
@@ -171,7 +190,7 @@ namespace TranscripTrack.App.ViewModels
             GC.Collect();
         }
 
-        private bool CanEditLineRateEntry()
+        private bool CanUpdateLineRateEntry()
         {
             return SelectedLineRateEntry is LineRateEntryTableModel;
         }
