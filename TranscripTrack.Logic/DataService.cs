@@ -72,6 +72,18 @@ namespace TranscripTrack.Logic
             }
         }
 
+        public static async Task DeleteLineRateEntryAsync(int lineRateEntryId)
+        {
+            using (var db = new TrackerDbContext())
+            {
+                var existingRecord = await db.LineRateEntries.SingleAsync(lre => lre.LineRateEntryId == lineRateEntryId);
+
+                db.LineRateEntries.Remove(existingRecord);
+
+                await db.SaveChangesAsync();
+            }
+        }
+
         public static async Task<List<LineRate>> GetLineRatesAsync(int currentProfileId)
         {
             using (var db = new TrackerDbContext())
