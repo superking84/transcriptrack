@@ -14,6 +14,7 @@ namespace TranscripTrack.Data.Models
         public string NumLinesText {
             get => numLinesText;
             set {
+                // is validation needed here AND in code?
                 if (string.IsNullOrEmpty(value) || int.TryParse(value, out int _)){
                     numLinesText = value;
                     OnPropertyChanged("NumLinesText");

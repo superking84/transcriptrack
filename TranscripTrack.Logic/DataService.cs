@@ -18,7 +18,34 @@ namespace TranscripTrack.Logic
             }
         }
 
-        public static async Task<int> AddProfileAsync(ProfileModel model)
+        public static async Task<int> SaveProfileAsync(ProfileModel model)
+        {
+            if (model.ProfileId.HasValue)
+            {
+                return await EditProfileAsync(model);
+            }
+            else
+            {
+                return await AddProfileAsync(model);
+            }
+        }
+
+        private static async Task<int> EditProfileAsync(ProfileModel model)
+        {
+            using (var db = new TrackerDbContext())
+            {
+                var existingProfile = await db.Profiles.FindAsync(model.ProfileId.Value);
+                existingProfile.Name = model.Name;
+                existingProfile.Client = model.Client;
+                existingProfile.CurrencyId = model.CurrencyId;
+
+                await db.SaveChangesAsync();
+
+                return existingProfile.ProfileId;
+            }
+        }
+
+        private static async Task<int> AddProfileAsync(ProfileModel model)
         {
             using (var db = new TrackerDbContext())
             {
@@ -111,11 +138,18 @@ namespace TranscripTrack.Logic
             }
         }
 
-        public static async Task<Profile> GetProfileAsync(int profileId)
+        public static async Task<ProfileModel> GetProfileAsync(int profileId)
         {
             using (var db = new TrackerDbContext())
             {
-                return await db.Profiles.FindAsync(profileId);
+                var existingProfile = await db.Profiles.FindAsync(profileId);
+                return new ProfileModel
+                {
+                    ProfileId = existingProfile.ProfileId,
+                    Name = existingProfile.Name,
+                    Client = existingProfile.Client,
+                    CurrencyId = existingProfile.CurrencyId
+                };
             }
         }
 

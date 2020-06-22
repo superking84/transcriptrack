@@ -13,7 +13,7 @@ namespace TranscripTrack.Data.Models
         
         private int currencyId;
 
-        public int? ProfileId { get; }
+        public int? ProfileId { get; set; }
         public string Name {
             get => name;
             set {

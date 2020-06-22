@@ -21,6 +21,7 @@ namespace TranscripTrack.App.ViewModels
 
         public RelayCommand SelectProfileCommand { get; private set; }
         public RelayCommand AddProfileCommand { get; private set; }
+        public RelayCommand EditProfileCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
@@ -29,6 +30,7 @@ namespace TranscripTrack.App.ViewModels
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
+            EditProfileCommand = new RelayCommand(OpenEditProfileModal);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
@@ -61,8 +63,8 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private Profile profile;
-        public Profile Profile {
+        private ProfileModel profile;
+        public ProfileModel Profile {
             get => profile;
             set {
                 profile = value;
@@ -170,6 +172,20 @@ namespace TranscripTrack.App.ViewModels
             editProfileView.ShowDialog();
 
             GC.Collect();
+        }
+
+        private void OpenEditProfileModal()
+        {
+            editProfileView = new EditProfileView(ProfileId);
+            editProfileView.Closed += new EventHandler(OnEditProfileClosed);
+            editProfileView.ShowDialog();
+
+            GC.Collect();
+        }
+
+        private async void OnEditProfileClosed(object sender, EventArgs e)
+        {
+            await LoadCurrentProfileAsync();
         }
 
         private void OpenAddLineEntryModal()

@@ -11,6 +11,7 @@ namespace TranscripTrack.App.ViewModels
 {
     public class EditProfileViewModel : BaseViewModel
     {
+        private readonly int? profileId;
         private readonly bool isAdd;
         public RelayCommand<Window> SaveCommand { get; set; }
 
@@ -27,24 +28,19 @@ namespace TranscripTrack.App.ViewModels
         
         public EditProfileViewModel(int? profileId)
         {
+            this.profileId = profileId;
             isAdd = !profileId.HasValue;
 
             Title = isAdd ? "Add New Profile" : "Edit Profile";
-
-            if (isAdd)
-            {
-                SaveCommand = new RelayCommand<Window>(SaveNewProfileAsync, CanSaveNewProfile);
-            }
-            else
-            {
-                //??????
-            }
+            
+            SaveCommand = new RelayCommand<Window>(SaveProfileAsync, CanSaveProfile);
+            
             Model = new ProfileModel();
         }
 
-        private async void SaveNewProfileAsync(Window window)
+        private async void SaveProfileAsync(Window window)
         {
-            var profileId = await DataService.AddProfileAsync(Model);
+            var profileId = await DataService.SaveProfileAsync(Model);
             
             Properties.UserSettings.Default.CurrentProfileId = profileId;
             Properties.UserSettings.Default.Save();
@@ -53,7 +49,7 @@ namespace TranscripTrack.App.ViewModels
         }
 
         // will implement cleaner validation later
-        private bool CanSaveNewProfile(Window window)
+        private bool CanSaveProfile(Window window)
         {
             return !string.IsNullOrWhiteSpace(Model.Name) &&
                 !string.IsNullOrWhiteSpace(Model.Client) &&
@@ -63,6 +59,15 @@ namespace TranscripTrack.App.ViewModels
         public override async void OnLoaded(object sender, EventArgs e)
         {
             Currencies = await DataService.GetCurrenciesAsync();
+
+            if (profileId.HasValue)
+            {
+                var profileModel = await DataService.GetProfileAsync(profileId.Value);
+                Model.ProfileId = profileId.Value;
+                Model.Name = profileModel.Name;
+                Model.Client = profileModel.Client;
+                Model.CurrencyId = profileModel.CurrencyId;
+            }
         }
     }
 }
