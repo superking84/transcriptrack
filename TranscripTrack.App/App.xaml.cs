@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TranscripTrack.Data;
+using TranscripTrack.Logic;
 
 namespace TranscripTrack.App
 {
@@ -13,6 +15,15 @@ namespace TranscripTrack.App
     /// </summary>
     public partial class App : Application
     {
-        
+        public TrackerDbContext DbContext { get; private set; }
+        public ProfileDataService ProfileDataService { get; private set; }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            DbContext = new TrackerDbContext();
+            ProfileDataService = new ProfileDataService(DbContext);
+        }
     }
 }

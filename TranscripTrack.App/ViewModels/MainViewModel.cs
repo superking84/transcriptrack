@@ -25,7 +25,7 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
-
+        public RelayCommand TestDeleteCommand { get; private set; }
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
@@ -34,16 +34,16 @@ namespace TranscripTrack.App.ViewModels
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
-
+            
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
         }
 
         private async void ConfirmDeleteLineRateEntry()
         {
             var response = MessageBox.Show(
-                "Delete this record?  This action cannot be undone.", 
-                "Delete", 
-                MessageBoxButton.OKCancel, 
+                "Delete this record?  This action cannot be undone.",
+                "Delete",
+                MessageBoxButton.OKCancel,
                 MessageBoxImage.Warning
             );
 
@@ -98,6 +98,7 @@ namespace TranscripTrack.App.ViewModels
                 OnPropertyChanged("SelectedLineRateEntry");
             }
         }
+        public bool CanDeleteEntry => SelectedLineRateEntry is LineRateEntryTableModel;
 
         private DateTime lineEntryDate;
         public DateTime LineEntryDate {
@@ -121,7 +122,7 @@ namespace TranscripTrack.App.ViewModels
         public override async void OnLoaded(object sender, EventArgs e)
         {
             LineEntryDate = DateTime.Today;
-            
+
             await LoadCurrentProfileAsync();
         }
 
