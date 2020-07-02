@@ -34,7 +34,7 @@ namespace TranscripTrack.App.ViewModels
             SaveCommand = new RelayCommand<Window>(SaveProfileAsync, CanSaveProfile);
 
             Model = new ProfileEditModel();
-        }
+        }   
 
         private async void SaveProfileAsync(Window window)
         {
