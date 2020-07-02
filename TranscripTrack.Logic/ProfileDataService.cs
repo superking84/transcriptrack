@@ -28,6 +28,9 @@ namespace TranscripTrack.Logic
             if (model.ProfileId.HasValue)
             {
                 profile = await db.Profiles.FindAsync(model.ProfileId.Value);
+                profile.Name = model.Name;
+                profile.Client = model.Client;
+                profile.CurrencyId = model.CurrencyId;
 
                 return await EditAsync(profile);
             }
