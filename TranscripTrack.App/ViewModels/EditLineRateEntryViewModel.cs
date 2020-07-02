@@ -1,12 +1,10 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
-using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
@@ -14,7 +12,7 @@ namespace TranscripTrack.App.ViewModels
     {
         private readonly bool isAdd;
         private readonly int? lineRateEntryId;
-        
+
         public RelayCommand<Window> SaveCommand { get; private set; }
 
         private List<LineRate> lineRates;
@@ -49,18 +47,18 @@ namespace TranscripTrack.App.ViewModels
 
         private async void SaveLineRateEntryAsync(Window window)
         {
-            await DataService.SaveLineEntryAsync(Model);
+            await App.LineRateEntryDataService.SaveAsync(Model);
 
             window?.Close();
         }
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
-            LineRates = await DataService.GetLineRatesAsync(Properties.UserSettings.Default.CurrentProfileId);
-            
+            LineRates = await App.LineRateDataService.GetForProfileAsync(Properties.UserSettings.Default.CurrentProfileId);
+
             if (!isAdd)
             {
-                Model = await DataService.GetLineRateEntryAsync(lineRateEntryId.Value);
+                Model = await App.LineRateEntryDataService.GetModelAsync(lineRateEntryId.Value);
             }
         }
 

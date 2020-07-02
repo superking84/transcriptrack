@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using TranscripTrack.App.ViewModels;
+﻿using System.Windows;
 
 namespace TranscripTrack.App
 {

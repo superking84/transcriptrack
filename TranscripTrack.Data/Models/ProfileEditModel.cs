@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using TranscripTrack.Data;
-
-namespace TranscripTrack.Data.Models
+﻿namespace TranscripTrack.Data.Models
 {
-    public class ProfileModel : BaseModel
+    public class ProfileEditModel : BaseModel
     {
         private string name;
         private string client;
-        
+
         private int currencyId;
 
         public int? ProfileId { get; set; }
@@ -22,12 +16,12 @@ namespace TranscripTrack.Data.Models
             }
         }
 
-        public string Client { 
-            get => client; 
+        public string Client {
+            get => client;
             set {
                 client = value;
                 OnPropertyChanged("Client");
-            } 
+            }
         }
 
         public int CurrencyId {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
@@ -9,7 +9,7 @@ namespace TranscripTrack.Logic
 {
     public sealed class ProfileDataService : BaseDataService
     {
-        public ProfileDataService(TrackerDbContext dbContext) : base(dbContext)
+        public ProfileDataService(TrackerDbContext db) : base(db)
         {
         }
 
@@ -18,17 +18,17 @@ namespace TranscripTrack.Logic
             await db.Profiles.AddAsync(profile);
 
             await db.SaveChangesAsync();
-            
+
             return profile.ProfileId;
         }
 
-        public async Task<int> SaveAsync(ProfileModel model)
+        public async Task<int> SaveAsync(ProfileEditModel model)
         {
             Profile profile;
             if (model.ProfileId.HasValue)
             {
-                profile = await GetAsync(model.ProfileId.Value);
-                
+                profile = await db.Profiles.FindAsync(model.ProfileId.Value);
+
                 return await EditAsync(profile);
             }
             else
@@ -46,7 +46,7 @@ namespace TranscripTrack.Logic
 
         public async Task DeleteAsync(int id)
         {
-            var existingRecord = await GetAsync(id);
+            var existingRecord = await db.Profiles.FindAsync(id);
             db.Profiles.Remove(existingRecord);
 
             await db.SaveChangesAsync();
@@ -55,15 +55,40 @@ namespace TranscripTrack.Logic
         private async Task<int> EditAsync(Profile profile)
         {
             db.Profiles.Update(profile);
-            
+
             await db.SaveChangesAsync();
 
             return profile.ProfileId;
         }
 
-        public async Task<Profile> GetAsync(int id)
+        public async Task<ProfileEditModel> GetModelAsync(int id)
         {
-            return await db.Profiles.FindAsync(id);
+            var existingProfile = await db.Profiles.FindAsync(id);
+            return new ProfileEditModel
+            {
+                ProfileId = existingProfile.ProfileId,
+                Name = existingProfile.Name,
+                Client = existingProfile.Client,
+                CurrencyId = existingProfile.CurrencyId
+            };
+        }
+
+        public async Task<List<ProfileSelectTableModel>> GetSelectProfileListAsync()
+        {
+            return await (from p in db.Profiles
+                          join c in db.Currencies on p.CurrencyId equals c.CurrencyId
+                          select new ProfileSelectTableModel
+                          {
+                              ProfileId = p.ProfileId,
+                              Name = p.Name,
+                              Client = p.Client,
+                              CurrencyCode = c.CurrencyCode
+                          }).ToListAsync();
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return (await db.Profiles.FindAsync(id)) is Profile;
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TranscripTrack.Data.Models
+﻿namespace TranscripTrack.Data.Models
 {
     public class ProfileSelectTableModel : BaseModel
     {

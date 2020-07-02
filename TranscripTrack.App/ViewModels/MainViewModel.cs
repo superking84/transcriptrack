@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using TranscripTrack.App.Views;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
-using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
@@ -34,7 +33,7 @@ namespace TranscripTrack.App.ViewModels
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
-            
+
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
         }
 
@@ -49,7 +48,7 @@ namespace TranscripTrack.App.ViewModels
 
             if (response == MessageBoxResult.OK)
             {
-                await DataService.DeleteLineRateEntryAsync(SelectedLineRateEntry.LineRateEntryId);
+                await App.LineRateEntryDataService.DeleteAsync(SelectedLineRateEntry.LineRateEntryId);
                 await LoadLineRateEntriesAsync();
             }
         }
@@ -63,8 +62,8 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private ProfileModel profile;
-        public ProfileModel Profile {
+        private ProfileEditModel profile;
+        public ProfileEditModel Profile {
             get => profile;
             set {
                 profile = value;
@@ -112,7 +111,7 @@ namespace TranscripTrack.App.ViewModels
         public async Task LoadCurrentProfileAsync()
         {
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
-            Profile = await DataService.GetProfileAsync(ProfileId);
+            Profile = await App.ProfileDataService.GetModelAsync(ProfileId);
 
             Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
 
@@ -133,7 +132,7 @@ namespace TranscripTrack.App.ViewModels
 
         private async Task LoadLineRateEntriesAsync()
         {
-            LineRateEntries = await DataService.GetLineRateEntriesAsync(LineEntryDate, ProfileId);
+            LineRateEntries = await App.LineRateEntryDataService.GetForProfileAndDateAsync(LineEntryDate, ProfileId);
         }
 
         private void OpenSelectProfileModal()

@@ -1,11 +1,9 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
-using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
@@ -24,24 +22,24 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        public ProfileModel Model { get; private set; }
-        
+        public ProfileEditModel Model { get; private set; }
+
         public EditProfileViewModel(int? profileId)
         {
             this.profileId = profileId;
             isAdd = !profileId.HasValue;
 
             Title = isAdd ? "Add New Profile" : "Edit Profile";
-            
+
             SaveCommand = new RelayCommand<Window>(SaveProfileAsync, CanSaveProfile);
-            
-            Model = new ProfileModel();
+
+            Model = new ProfileEditModel();
         }
 
         private async void SaveProfileAsync(Window window)
         {
-            var profileId = await DataService.SaveProfileAsync(Model);
-            
+            var profileId = await App.ProfileDataService.SaveAsync(Model);
+
             Properties.UserSettings.Default.CurrentProfileId = profileId;
             Properties.UserSettings.Default.Save();
 
@@ -58,11 +56,11 @@ namespace TranscripTrack.App.ViewModels
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
-            Currencies = await DataService.GetCurrenciesAsync();
+            Currencies = await App.CurrencyDataService.GetAllAsync();
 
             if (profileId.HasValue)
             {
-                var profileModel = await DataService.GetProfileAsync(profileId.Value);
+                var profileModel = await App.ProfileDataService.GetModelAsync(profileId.Value);
                 Model.ProfileId = profileId.Value;
                 Model.Name = profileModel.Name;
                 Model.Client = profileModel.Client;

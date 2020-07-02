@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TranscripTrack.Data.Models
 {
@@ -9,13 +7,14 @@ namespace TranscripTrack.Data.Models
         public int LineRateEntryId { get; set; }
         public DateTime EnteredDate { get; set; }
 
-        
+
         private string numLinesText;
         public string NumLinesText {
             get => numLinesText;
             set {
                 // is validation needed here AND in code?
-                if (string.IsNullOrEmpty(value) || int.TryParse(value, out int _)){
+                if (string.IsNullOrEmpty(value) || int.TryParse(value, out int _))
+                {
                     numLinesText = value;
                     OnPropertyChanged("NumLinesText");
                 }

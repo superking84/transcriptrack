@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using TranscripTrack.Data;
+﻿using TranscripTrack.Data;
 
 namespace TranscripTrack.Logic
 {

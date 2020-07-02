@@ -1,14 +1,8 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
-using TranscripTrack.Logic;
 
 namespace TranscripTrack.App.ViewModels
 {
@@ -39,7 +33,7 @@ namespace TranscripTrack.App.ViewModels
             get => profiles;
             set {
                 profiles = value;
-                
+
                 OnPropertyChanged("Profiles");
             }
         }
@@ -47,7 +41,7 @@ namespace TranscripTrack.App.ViewModels
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
-            Profiles = await DataService.GetProfilesAsync();
+            Profiles = await App.ProfileDataService.GetSelectProfileListAsync();
         }
     }
 }
