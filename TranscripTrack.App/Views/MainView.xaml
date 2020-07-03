@@ -16,8 +16,6 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="150" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Background="White">
@@ -26,10 +24,15 @@
                     <Button ToolTip="Add A New Profile" Command="{Binding AddProfileCommand}" Content="{StaticResource AddUserIcon}" />
                     <Button ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" Content="{StaticResource EditIcon}" />
                     <Button ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" Content="{StaticResource OpenIcon}" />
+                    <Button ToolTip="Delete Profile" Command="{Binding DeleteProfileCommand}" Content="{StaticResource DeleteUserIcon}" />
                 </ToolBar>
                 <ToolBar Background="White">
                     <Button ToolTip="Add Lines" Command="{Binding AddLineRateEntryCommand}" Content="{StaticResource AddIcon}" />
                     <Button ToolTip="Edit Line Entry" Command="{Binding EditLineRateEntryCommand}" Content="{StaticResource EditIcon}" />
+                    
+                </ToolBar>
+                <ToolBar Background="White">
+                    
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>

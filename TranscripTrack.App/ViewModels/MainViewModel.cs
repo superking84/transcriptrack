@@ -21,6 +21,7 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand SelectProfileCommand { get; private set; }
         public RelayCommand AddProfileCommand { get; private set; }
         public RelayCommand EditProfileCommand { get; private set; }
+        public RelayCommand DeleteProfileCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
@@ -29,12 +30,45 @@ namespace TranscripTrack.App.ViewModels
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
-            EditProfileCommand = new RelayCommand(OpenEditProfileModal);
-            AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal);
+            EditProfileCommand = new RelayCommand(OpenEditProfileModal, CanUpdateProfile);
+            DeleteProfileCommand = new RelayCommand(ConfirmDeleteProfile, CanUpdateProfile);
+            AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal, CanAddLineRateEntry);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
+        }
+
+        private async void ConfirmDeleteProfile()
+        {
+            var response = MessageBox.Show(
+                "Delete this profile?  This action cannot be undone, and all associated data will be permanently lost.",
+                "Delete",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Warning
+            );
+
+            if (response == MessageBoxResult.OK)
+            {
+                await App.ProfileDataService.DeleteAsync(ProfileId);
+
+                Properties.UserSettings.Default.CurrentProfileId = default;
+                Properties.UserSettings.Default.Save();
+
+                await LoadCurrentProfileAsync();
+                // TO DO: Clear out any onscreen data, remove ProfileId user setting and viewmodel properties
+            }
+        }
+
+        private bool CanAddLineRateEntry()
+        {
+            // TO DO: Add condition to check if datepicker has a valid date selected
+            return Profile is ProfileEditModel;
+        }
+
+        private bool CanUpdateProfile()
+        {
+            return Profile is ProfileEditModel;
         }
 
         private async void ConfirmDeleteLineRateEntry()
@@ -113,7 +147,14 @@ namespace TranscripTrack.App.ViewModels
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await App.ProfileDataService.GetModelAsync(ProfileId);
 
-            Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+            if (Profile is ProfileEditModel)
+            {
+                Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+            }
+            else
+            {
+                Application.Current.MainWindow.Title = "TranscripTrack";
+            }
 
             await LoadLineRateEntriesAsync();
         }

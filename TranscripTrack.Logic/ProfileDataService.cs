@@ -49,6 +49,7 @@ namespace TranscripTrack.Logic
 
         public async Task DeleteAsync(int id)
         {
+            // TO DO: Cascade deletion down to Line Rates and Line Rate Entries, or is it automatic?  Need to confirm
             var existingRecord = await db.Profiles.FindAsync(id);
             db.Profiles.Remove(existingRecord);
 
@@ -66,14 +67,18 @@ namespace TranscripTrack.Logic
 
         public async Task<ProfileEditModel> GetModelAsync(int id)
         {
-            var existingProfile = await db.Profiles.FindAsync(id);
-            return new ProfileEditModel
+            if (await db.Profiles.FindAsync(id) is Profile existingProfile)
             {
-                ProfileId = existingProfile.ProfileId,
-                Name = existingProfile.Name,
-                Client = existingProfile.Client,
-                CurrencyId = existingProfile.CurrencyId
-            };
+                return new ProfileEditModel
+                {
+                    ProfileId = existingProfile.ProfileId,
+                    Name = existingProfile.Name,
+                    Client = existingProfile.Client,
+                    CurrencyId = existingProfile.CurrencyId
+                };
+            }
+
+            return null;
         }
 
         public async Task<List<ProfileSelectTableModel>> GetSelectProfileListAsync()
