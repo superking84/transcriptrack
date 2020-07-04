@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TranscripTrack.Data;
+using TranscripTrack.Data.Models;
 
 namespace TranscripTrack.Logic
 {
@@ -10,6 +11,37 @@ namespace TranscripTrack.Logic
     {
         public LineRateDataService(TrackerDbContext db) : base(db)
         {
+        }
+
+        public async Task SaveAsync(LineRateEditModel model)
+        {
+            if (model.LineRateId != default)
+            {
+                var existingRecord = await db.LineRates.FindAsync(model.LineRateId);
+
+                existingRecord.Description = model.Description;
+                existingRecord.Rate = model.Rate;
+            }
+            else
+            {
+                var newRecord = new LineRate
+                {
+                    ProfileId = model.ProfileId,
+                    Description = model.Description,
+                    Rate = model.Rate
+                };
+
+                await db.LineRates.AddAsync(newRecord);
+            }
+
+            await db.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            db.LineRates.Remove(await db.LineRates.FindAsync(id));
+
+            await db.SaveChangesAsync();
         }
 
         public async Task<List<LineRate>> GetForProfileAsync(int profileId)
@@ -20,6 +52,17 @@ namespace TranscripTrack.Logic
                     .ToListAsync();
         }
 
+        public async Task<LineRateEditModel> GetModelAsync(int id)
+        {
+            var lineRate = await db.LineRates.FindAsync(id);
 
+            return new LineRateEditModel
+            {
+                LineRateId = lineRate.LineRateId,
+                ProfileId = lineRate.ProfileId,
+                Description = lineRate.Description,
+                RateText = lineRate.Rate.ToString()
+            };
+        }
     }
 }

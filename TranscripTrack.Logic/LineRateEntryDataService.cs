@@ -16,12 +16,12 @@ namespace TranscripTrack.Logic
 
         public async Task SaveAsync(LineRateEntryEditModel model)
         {
-            if (model.LineRateEntryId > 0)
+            if (model.LineRateEntryId != default)
             {
-                var existingModel = await db.LineRateEntries.FindAsync(model.LineRateEntryId);
+                var existingRecord = await db.LineRateEntries.FindAsync(model.LineRateEntryId);
 
-                existingModel.LineRateId = model.LineRateId;
-                existingModel.NumLines = model.NumLines;
+                existingRecord.LineRateId = model.LineRateId;
+                existingRecord.NumLines = model.NumLines;
             }
             else
             {
@@ -40,9 +40,7 @@ namespace TranscripTrack.Logic
 
         public async Task DeleteAsync(int id)
         {
-            var existingRecord = await db.LineRateEntries.SingleAsync(lre => lre.LineRateEntryId == id);
-
-            db.LineRateEntries.Remove(existingRecord);
+            db.LineRateEntries.Remove(await db.LineRateEntries.FindAsync(id));
 
             await db.SaveChangesAsync();
         }
