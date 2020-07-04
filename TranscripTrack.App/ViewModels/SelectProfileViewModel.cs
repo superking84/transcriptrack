@@ -8,11 +8,13 @@ namespace TranscripTrack.App.ViewModels
 {
     public class SelectProfileViewModel : BaseViewModel
     {
-        public RelayCommand<Window> ItemSelectCommand { get; set; }
+        public RelayCommand<Window> ItemSelectCommand { get; private set; }
 
         public SelectProfileViewModel()
         {
-            ItemSelectCommand = new RelayCommand<Window>(SelectProfileAsync, CanSelectProfile);
+            Title = "Select A Profile";
+
+            ItemSelectCommand = new RelayCommand<Window>(SelectProfile, CanSelectProfile);
         }
 
         private bool CanSelectProfile(Window window)
@@ -20,7 +22,7 @@ namespace TranscripTrack.App.ViewModels
             return SelectedProfile != null;
         }
 
-        private void SelectProfileAsync(Window window)
+        private void SelectProfile(Window window)
         {
             Properties.UserSettings.Default.CurrentProfileId = SelectedProfile.ProfileId;
             Properties.UserSettings.Default.Save();

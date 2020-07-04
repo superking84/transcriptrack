@@ -36,10 +36,9 @@ namespace TranscripTrack.App.ViewModels
         public EditLineRateEntryViewModel(DateTime selectedDate, int? lineRateEntryId)
         {
             isAdd = !lineRateEntryId.HasValue;
-            //this.selectedDate = selectedDate;
             this.lineRateEntryId = lineRateEntryId;
 
-            Title = $"{(isAdd ? "Add Lines" : "Edit Lines")} - {selectedDate.ToShortDateString()}";
+            Title = $"{(isAdd ? "Add" : "Edit")} Lines - {selectedDate.ToShortDateString()}";
 
             Model = new LineRateEntryEditModel { EnteredDate = selectedDate };
             SaveCommand = new RelayCommand<Window>(SaveLineRateEntryAsync, CanSave);
