@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="300" d:DesignWidth="550">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoaded" />
@@ -26,6 +26,11 @@
                     <Button ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" Content="{StaticResource OpenIcon}" />
                     <Button ToolTip="Delete Profile" Command="{Binding DeleteProfileCommand}" Content="{StaticResource DeleteUserIcon}" />
                 </ToolBar>
+                
+                <ToolBar Background="White">
+                    <Button ToolTip="Manage Line Rates" Command="{Binding ManageLineRatesCommand}" Content="{StaticResource ManageLineRatesIcon}" />
+                </ToolBar>
+                
                 <ToolBar Background="White">
                     <Button ToolTip="Add Lines" Command="{Binding AddLineRateEntryCommand}" Content="{StaticResource AddIcon}" />
                     <Button ToolTip="Edit Line Entry" Command="{Binding EditLineRateEntryCommand}" Content="{StaticResource EditIcon}" />

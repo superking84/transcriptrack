@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ namespace TranscripTrack.App.ViewModels
         private EditLineRateEntryView editLineRateEntryView;
         private EditProfileView editProfileView;
         private SelectProfileView selectProfileView;
+        private ManageLineRatesView manageLineRatesView;
 
         private readonly EventHandler editLineRateEntryClosedHandler;
 
@@ -22,6 +24,7 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand AddProfileCommand { get; private set; }
         public RelayCommand EditProfileCommand { get; private set; }
         public RelayCommand DeleteProfileCommand { get; private set; }
+        public RelayCommand ManageLineRatesCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
@@ -32,11 +35,25 @@ namespace TranscripTrack.App.ViewModels
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
             EditProfileCommand = new RelayCommand(OpenEditProfileModal, CanUpdateProfile);
             DeleteProfileCommand = new RelayCommand(ConfirmDeleteProfile, CanUpdateProfile);
+            ManageLineRatesCommand = new RelayCommand(OpenManageLineRatesModal, CanManageLineRates);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal, CanAddLineRateEntry);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
+        }
+
+        private async void OpenManageLineRatesModal()
+        {
+            manageLineRatesView = new ManageLineRatesView();
+            // don't believe an event handler is needed, as this modal doesn't
+            // produce any onscreen changes
+            //manageLineRatesView.Closed += new EventHandler(OnManageLineRatesClosed);
+            manageLineRatesView.ShowDialog();
+
+            await LoadCurrentProfileAsync();
+
+            GC.Collect();
         }
 
         private async void ConfirmDeleteProfile()
@@ -56,17 +73,21 @@ namespace TranscripTrack.App.ViewModels
                 Properties.UserSettings.Default.Save();
 
                 await LoadCurrentProfileAsync();
-                // TO DO: Clear out any onscreen data, remove ProfileId user setting and viewmodel properties
             }
         }
 
         private bool CanAddLineRateEntry()
         {
-            // TO DO: Add condition to check if datepicker has a valid date selected
-            return Profile is ProfileEditModel;
+            // TODO: Add condition to check if datepicker has a valid date selected
+            return Profile is ProfileEditModel && (LineRates?.Any() == true);
         }
 
         private bool CanUpdateProfile()
+        {
+            return Profile is ProfileEditModel;
+        }
+
+        private bool CanManageLineRates()
         {
             return Profile is ProfileEditModel;
         }
@@ -146,6 +167,7 @@ namespace TranscripTrack.App.ViewModels
         {
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await App.ProfileDataService.GetModelAsync(ProfileId);
+            LineRates = await App.LineRateDataService.GetForProfileAsync(ProfileId);
 
             if (Profile is ProfileEditModel)
             {
