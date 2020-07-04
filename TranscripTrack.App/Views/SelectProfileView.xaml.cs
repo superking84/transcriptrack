@@ -10,6 +10,7 @@ namespace TranscripTrack.App.Views
     {
         public SelectProfileView()
         {
+            Owner = App.Current.MainWindow;
             DataContext = new SelectProfileViewModel();
 
             InitializeComponent();

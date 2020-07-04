@@ -11,6 +11,7 @@ namespace TranscripTrack.App.Views
     {
         public EditLineRateEntryView(DateTime selectedDate, int? lineRateEntryId)
         {
+            Owner = App.Current.MainWindow;
             DataContext = new EditLineRateEntryViewModel(selectedDate, lineRateEntryId);
 
             InitializeComponent();
