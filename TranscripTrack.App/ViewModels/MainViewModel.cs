@@ -43,15 +43,11 @@ namespace TranscripTrack.App.ViewModels
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
         }
 
-        private async void OpenManageLineRatesModal()
+        private void OpenManageLineRatesModal()
         {
             manageLineRatesView = new ManageLineRatesView();
-            // don't believe an event handler is needed, as this modal doesn't
-            // produce any onscreen changes
-            //manageLineRatesView.Closed += new EventHandler(OnManageLineRatesClosed);
+            manageLineRatesView.Closed += new EventHandler(OnManageLineRatesClosed);
             manageLineRatesView.ShowDialog();
-
-            await LoadCurrentProfileAsync();
 
             GC.Collect();
         }
@@ -185,6 +181,11 @@ namespace TranscripTrack.App.ViewModels
         {
             LineEntryDate = DateTime.Today;
 
+            await LoadCurrentProfileAsync();
+        }
+
+        public async void OnManageLineRatesClosed(object sender, EventArgs e)
+        {
             await LoadCurrentProfileAsync();
         }
 

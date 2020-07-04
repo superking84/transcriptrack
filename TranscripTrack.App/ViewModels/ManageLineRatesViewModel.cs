@@ -8,8 +8,6 @@ namespace TranscripTrack.App.ViewModels
 {
     public class ManageLineRatesViewModel : BaseViewModel
     {
-        //public RelayCommand AddCommand { get; private set; }
-        //public RelayCommand RemoveCommand { get; private set; }
         public RelayCommand<Window> SaveCommand { get; private set; }
 
         private LineRateEditModel selectedLineRate;
@@ -25,8 +23,6 @@ namespace TranscripTrack.App.ViewModels
         {
             Title = "Manage Line Rates";
 
-            //AddCommand = new RelayCommand(AddLineRate);
-            //RemoveCommand = new RelayCommand(RemoveLineRate, CanRemove);
             SaveCommand = new RelayCommand<Window>(SaveChangesAsync);
 
             LineRates = new List<LineRateEditModel>();
@@ -38,22 +34,6 @@ namespace TranscripTrack.App.ViewModels
 
             window?.Close();
         }
-
-        //private void RemoveLineRate()
-        //{
-        //    LineRates.Remove(SelectedLineRate);
-        //    SelectedLineRate = null;
-        //}
-
-        //private bool CanRemove()
-        //{
-        //    return SelectedLineRate is LineRateEditModel;
-        //}
-
-        //private void AddLineRate()
-        //{
-        //    LineRates.Add(new LineRateEditModel { ProfileId = Properties.UserSettings.Default.CurrentProfileId });
-        //}
 
         private List<LineRateEditModel> lineRates;
         public List<LineRateEditModel> LineRates {
