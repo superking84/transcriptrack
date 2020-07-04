@@ -7,6 +7,7 @@ namespace TranscripTrack.Data.Models
     public class LineRateEditModel : BaseModel
     {
         public int LineRateId { get; set; }
+        public int ProfileId { get; set; }
         public string Description { get; set; }
 
         private string rateText;
@@ -15,9 +16,12 @@ namespace TranscripTrack.Data.Models
             set {
                 if (string.IsNullOrEmpty(value) || decimal.TryParse(value, out decimal _))
                 {
-
+                    rateText = value;
+                    OnPropertyChanged("RateText");
                 }
             }
         }
+
+        public decimal Rate => decimal.Parse(rateText);
     }
 }

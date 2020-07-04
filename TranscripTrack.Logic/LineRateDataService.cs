@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,40 @@ namespace TranscripTrack.Logic
 
                 await db.LineRates.AddAsync(newRecord);
             }
+
+            await db.SaveChangesAsync();
+        }
+
+        public async Task<List<LineRateEditModel>> GetAllForEditAsync(int profileId)
+        {
+            return (await db.LineRates
+                .Where(lr => lr.ProfileId == profileId)
+                .OrderBy(lr => lr.Description)
+                .ToListAsync())
+                .Select(lr => new LineRateEditModel
+                {
+                    LineRateId = lr.LineRateId,
+                    ProfileId = lr.ProfileId,
+                    Description = lr.Description,
+                    RateText = lr.Rate.ToString()
+                })
+                .ToList();
+        }
+
+        // TODO: This currently only adds new ones; I need to add code to edit and remove them too
+        public async Task SaveChangesAsync(List<LineRateEditModel> lineRates, int profileId)
+        {
+            var newRecords = lineRates
+                .Where(lr => lr.LineRateId == default)
+                .Select(lr => new LineRate
+                {
+                    ProfileId = profileId,
+                    Description = lr.Description,
+                    Rate = lr.Rate
+                })
+                .ToArray();
+
+            await db.LineRates.AddRangeAsync(newRecords);
 
             await db.SaveChangesAsync();
         }
