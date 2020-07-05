@@ -54,7 +54,6 @@ namespace TranscripTrack.Logic
                 .ToList();
         }
 
-        // TODO: This currently only adds new ones; I need to add code to edit and remove them too
         public async Task SaveChangesAsync(List<LineRateEditModel> lineRates, int profileId)
         {
             var newRecords = lineRates
@@ -64,10 +63,23 @@ namespace TranscripTrack.Logic
                     ProfileId = profileId,
                     Description = lr.Description,
                     Rate = lr.Rate
-                })
-                .ToArray();
-
+                });
             await db.LineRates.AddRangeAsync(newRecords);
+
+            var existingLineRates = lineRates
+                .Where(lr => lr.LineRateId != default);
+            foreach (var existing in existingLineRates)
+            {
+                var recordToUpdate = await db.LineRates.FindAsync(existing.LineRateId);
+
+                recordToUpdate.Description = existing.Description;
+                recordToUpdate.Rate = existing.Rate;
+            }
+            
+            var existingLineRateIds = existingLineRates.Select(lr => lr.LineRateId);
+            var recordsToDelete = db.LineRates.Where(lr => !existingLineRateIds.Contains(lr.LineRateId));
+            
+            db.LineRates.RemoveRange(recordsToDelete);
 
             await db.SaveChangesAsync();
         }

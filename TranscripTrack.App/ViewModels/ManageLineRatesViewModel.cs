@@ -24,7 +24,7 @@ namespace TranscripTrack.App.ViewModels
             Title = "Manage Line Rates";
 
             SaveCommand = new RelayCommand<Window>(SaveChangesAsync);
-
+                
             LineRates = new List<LineRateEditModel>();
         }
 
@@ -40,7 +40,6 @@ namespace TranscripTrack.App.ViewModels
             get => lineRates;
             set {
                 lineRates = value;
-
                 OnPropertyChanged("LineRates");
             }
         }
