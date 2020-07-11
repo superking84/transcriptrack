@@ -73,5 +73,21 @@ namespace TranscripTrack.Logic
                               AmountEarned = lre.NumLines * lr.Rate / 100
                           }).ToListAsync();
         }
+
+        public async Task<LineRateEntryDailyTotalModel> GetTotalsForDayAsync(DateTime date, int profileId)
+        {
+            var allLineRateEntries = await (from lre in db.LineRateEntries
+                                            join lr in db.LineRates on lre.LineRateId equals lr.LineRateId
+                                            where lr.ProfileId == profileId
+                                            && lre.EnteredDate.Date == date.Date
+                                            select new { lre.NumLines, AmountEarned = lre.NumLines * lr.Rate / 100 })
+                                        .ToListAsync();
+
+            return new LineRateEntryDailyTotalModel
+            {
+                TotalLines = allLineRateEntries.Sum(lre => lre.NumLines),
+                TotalPay = allLineRateEntries.Sum(lre => lre.AmountEarned)
+            };
+        }
     }
 }

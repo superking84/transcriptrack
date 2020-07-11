@@ -6,7 +6,7 @@
         xmlns:Views="clr-namespace:TranscripTrack.App.Views"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
-        Height="300" Width="550" WindowStartupLocation="CenterScreen">
+        Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Views:MainView />
     </Grid>

@@ -6,6 +6,21 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="550">
+    <UserControl.Resources>
+        <!-- DataGrid style -->
+        <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle1}"/>
+        </Style>
+        <!-- DataGridColumnHeader style -->
+        <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoaded" />
@@ -13,75 +28,126 @@
     </b:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="330" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="700" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="0" Background="White">
-            <ToolBarTray Background="White">
-                <ToolBar Background="White">
-                    <Button ToolTip="Add A New Profile" Command="{Binding AddProfileCommand}" Content="{StaticResource AddUserIcon}" />
-                    <Button ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" Content="{StaticResource EditIcon}" />
-                    <Button ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" Content="{StaticResource OpenIcon}" />
-                    <Button ToolTip="Delete Profile" Command="{Binding DeleteProfileCommand}" Content="{StaticResource DeleteUserIcon}" />
-                </ToolBar>
-                
-                <ToolBar Background="White">
-                    <Button ToolTip="Manage Line Rates" Command="{Binding ManageLineRatesCommand}" Content="{StaticResource ManageLineRatesIcon}" />
-                </ToolBar>
-                
-                <ToolBar Background="White">
-                    <Button ToolTip="Add Lines" Command="{Binding AddLineRateEntryCommand}" Content="{StaticResource AddIcon}" />
-                    <Button ToolTip="Edit Line Entry" Command="{Binding EditLineRateEntryCommand}" Content="{StaticResource EditIcon}" />
-                    
-                </ToolBar>
-                <ToolBar Background="White">
-                    
-                </ToolBar>
-            </ToolBarTray>
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="0, 0, 0, 25">
+            <Menu BorderThickness="0 0 0 1" BorderBrush="Black" Background="White" DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="E_xit" />
+                </MenuItem>
+
+                <MenuItem Header="_Profile">
+                    <MenuItem Header="Add _New" Command="{Binding AddProfileCommand}" />
+                    <MenuItem Header="_Edit Current" Command="{Binding EditProfileCommand}" />
+                    <MenuItem Header="_Change Profiles" Command="{Binding SelectProfileCommand}" />
+                    <MenuItem Header="_Delete Current" Command="{Binding DeleteProfileCommand}" />
+                </MenuItem>
+
+                <MenuItem Header="_Manage Line Rates" Command="{Binding ManageLineRatesCommand}" />
+
+                <MenuItem Header="_Line Entry">
+                    <MenuItem Header="Add _New Entry" Command="{Binding AddLineRateEntryCommand}" />
+                    <MenuItem Header="_Edit Selected Entry" Command="{Binding EditLineRateEntryCommand}" />
+                    <MenuItem Header="_Delete Selected Entry" Command="{Binding DeleteLineRateEntryCommand}" />
+                </MenuItem>
+            </Menu>
         </DockPanel>
-        
-        <DatePicker Name="lineEntryDatePicker" SelectedDate="{Binding LineEntryDate}" 
-                    Grid.Row="1" HorizontalAlignment="Center" Height="25">
-            <b:Interaction.Triggers>
-                <b:EventTrigger EventName="SelectedDateChanged">
-                    <b:CallMethodAction TargetObject="{Binding}" MethodName="OnEntryDateChanged" />
-                </b:EventTrigger>
-            </b:Interaction.Triggers>
-        </DatePicker>
-        
-        <DataGrid Grid.Row="2" Width="320"
-                  SelectionMode="Single" ItemsSource="{Binding LineRateEntries}" SelectedItem="{Binding SelectedLineRateEntry, Mode=TwoWay}"
-                  IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Add New..." Command="{Binding AddLineRateEntryCommand}" />
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}" />
-                    <Setter Property="ContextMenu">
-                        <Setter.Value>
-                            <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                <MenuItem Header="Edit" Command="{Binding EditLineRateEntryCommand}" />
-                                <MenuItem Header="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
-                            </ContextMenu>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.InputBindings>
-                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditLineRateEntryCommand}" />
-                <KeyBinding Key="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
-            </DataGrid.InputBindings>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Line Type" Width="80" Binding="{Binding LineRateType}" />
-                <DataGridTextColumn Header="# Lines" Width="50" Binding="{Binding NumLines}" />
-                <DataGridTextColumn Header="Entered On" Width="70" Binding="{Binding EnteredDate, StringFormat=d}" />
-                <DataGridTextColumn Header="Amount" Width="120" Binding="{Binding AmountEarned, StringFormat=C}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <DockPanel HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Background="White">
+            <StackPanel Orientation="Horizontal">
+                <Button Background="White" BorderThickness="0" ToolTip="Add A New Profile" Command="{Binding AddProfileCommand}" Content="{StaticResource AddUserIcon}" />
+                <Separator Margin="10" />
+                <Button Background="White" BorderThickness="0" ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" Content="{StaticResource EditIcon}" />
+                <Separator Margin="10" />
+                <Button Background="White" BorderThickness="0" ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" Content="{StaticResource OpenIcon}" />
+                <Separator Margin="10" />
+                <Button Background="White" BorderThickness="0" ToolTip="Delete Profile" Command="{Binding DeleteProfileCommand}" Content="{StaticResource DeleteUserIcon}" />
+                <Separator Margin="15" />
+
+            </StackPanel>
+        </DockPanel>
+
+        <Border Margin="50, 5, 50, 0" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="225" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <DatePicker Grid.Row="0" Name="lineEntryDatePicker" SelectedDate="{Binding LineEntryDate}" 
+                        Width="Auto" Height="25">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectedDateChanged">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="OnEntryDateChanged" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </DatePicker>
+
+                <DataGrid Grid.Row="1" Width="Auto" Style="{DynamicResource DataGridStyle1}" Background="White" BorderThickness="0 0 0 1" BorderBrush="Black" 
+                      SelectionMode="Single" ItemsSource="{Binding LineRateEntries}" SelectedItem="{Binding SelectedLineRateEntry, Mode=TwoWay}"
+                      IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add New..." Command="{Binding AddLineRateEntryCommand}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}" />
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                        <MenuItem Header="Edit" Command="{Binding EditLineRateEntryCommand}" />
+                                        <MenuItem Header="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditLineRateEntryCommand}" />
+                        <KeyBinding Key="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Line Type" Width="80" Binding="{Binding LineRateType}" />
+                        <DataGridTextColumn Header="# Lines" Width="50" Binding="{Binding NumLines}" />
+                        <DataGridTextColumn Header="Entered On" Width="70" Binding="{Binding EnteredDate, StringFormat=d}" />
+                        <DataGridTextColumn Header="Amount" Width="120" Binding="{Binding AmountEarned, StringFormat=C}" />
+                        <DataGridTemplateColumn Header="Action" Width="90" CanUserSort="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25" />
+                                            <ColumnDefinition Width="25" />
+                                            <ColumnDefinition Width="25" />
+                                            <ColumnDefinition Width="25" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="1" Content="{StaticResource EditIcon}" ToolTip="Edit"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.EditLineRateEntryCommand}" />
+                                        <Button Grid.Column="3" Content="{StaticResource TrashIcon}" ToolTip="Delete" />
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal">
+                    <Button Background="White" BorderThickness="0" ToolTip="Add Lines" Width="40" Height="40"
+                        Command="{Binding AddLineRateEntryCommand}" Content="{StaticResource AddIcon}" />
+                    <Button Background="White" BorderThickness="0" ToolTip="Manage Line Rates" Width="40" Height="40"
+                        Command="{Binding ManageLineRatesCommand}" Content="{StaticResource ManageLineRatesIcon}" />
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
