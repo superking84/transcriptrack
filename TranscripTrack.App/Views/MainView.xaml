@@ -7,11 +7,15 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="550">
     <UserControl.Resources>
-        <!-- DataGrid style -->
         <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle1}"/>
+            <Setter Property="CellStyle" Value="{DynamicResource CellStyle1}" />
         </Style>
-        <!-- DataGridColumnHeader style -->
+
+        <Style x:Key="CellStyle1" TargetType="DataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        
         <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Style.Triggers>
@@ -79,6 +83,7 @@
                     <RowDefinition Height="25" />
                     <RowDefinition Height="225" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <DatePicker Grid.Row="0" Name="lineEntryDatePicker" SelectedDate="{Binding LineEntryDate}" 
@@ -128,12 +133,14 @@
                                             <ColumnDefinition Width="25" />
                                             <ColumnDefinition Width="25" />
                                             <ColumnDefinition Width="25" />
-                                            <ColumnDefinition Width="25" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Column="1" Content="{StaticResource EditIcon}" ToolTip="Edit"
-                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.EditLineRateEntryCommand}" />
-                                        <Button Grid.Column="3" Content="{StaticResource TrashIcon}" ToolTip="Delete" />
+                                        <Button Grid.Column="0" Content="{StaticResource EditIcon}" ToolTip="Edit"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.EditLineRateEntryInLineCommand}" 
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
+                                        <Button Grid.Column="2" Content="{StaticResource TrashIcon}" ToolTip="Delete" 
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.DeleteLineRateEntryInLineCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
                                     </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -141,7 +148,14 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Left" Grid.Row="2" Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Hello This is Text" />
+                        <TextBlock Text="Hello This is Text" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Grid.Row="3" Orientation="Horizontal">
                     <Button Background="White" BorderThickness="0" ToolTip="Add Lines" Width="40" Height="40"
                         Command="{Binding AddLineRateEntryCommand}" Content="{StaticResource AddIcon}" />
                     <Button Background="White" BorderThickness="0" ToolTip="Manage Line Rates" Width="40" Height="40"

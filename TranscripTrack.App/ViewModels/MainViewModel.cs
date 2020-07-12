@@ -27,7 +27,9 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand ManageLineRatesCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
+        public RelayCommand<LineRateEntryTableModel> EditLineRateEntryInLineCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
+        public RelayCommand<LineRateEntryTableModel> DeleteLineRateEntryInLineCommand { get; private set; }
         public RelayCommand TestDeleteCommand { get; private set; }
         public MainViewModel()
         {
@@ -38,7 +40,9 @@ namespace TranscripTrack.App.ViewModels
             ManageLineRatesCommand = new RelayCommand(OpenManageLineRatesModal, CanManageLineRates);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal, CanAddLineRateEntry);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
+            EditLineRateEntryInLineCommand = new RelayCommand<LineRateEntryTableModel>(OpenEditLineRateEntryInLineModal);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
+            DeleteLineRateEntryInLineCommand = new RelayCommand<LineRateEntryTableModel>(ConfirmDeleteLineRateEntryInLine);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
         }
@@ -90,6 +94,11 @@ namespace TranscripTrack.App.ViewModels
 
         private async void ConfirmDeleteLineRateEntry()
         {
+            await ConfirmDeleteLineRateEntry(SelectedLineRateEntry.LineRateEntryId);
+        }
+
+        private async Task ConfirmDeleteLineRateEntry(int lineRateEntryId)
+        {
             var response = MessageBox.Show(
                 "Delete this record?  This action cannot be undone.",
                 "Delete",
@@ -99,9 +108,13 @@ namespace TranscripTrack.App.ViewModels
 
             if (response == MessageBoxResult.OK)
             {
-                await App.LineRateEntryDataService.DeleteAsync(SelectedLineRateEntry.LineRateEntryId);
+                await App.LineRateEntryDataService.DeleteAsync(lineRateEntryId);
                 await LoadLineRateEntriesAsync();
             }
+        }
+        private async void ConfirmDeleteLineRateEntryInLine(LineRateEntryTableModel entry)
+        {
+            await ConfirmDeleteLineRateEntry(entry.LineRateEntryId);
         }
 
         private int profileId;
@@ -263,11 +276,20 @@ namespace TranscripTrack.App.ViewModels
 
         private void OpenEditLineRateEntryModal()
         {
-            editLineRateEntryView = new EditLineRateEntryView(SelectedLineRateEntry.EnteredDate, SelectedLineRateEntry.LineRateEntryId);
+            OpenEditLineRateEntryModal(SelectedLineRateEntry.EnteredDate, SelectedLineRateEntry.LineRateEntryId);
+        }
+
+        private void OpenEditLineRateEntryModal(DateTime date, int lineRateEntryId)
+        {
+            editLineRateEntryView = new EditLineRateEntryView(date, lineRateEntryId);
             editLineRateEntryView.Closed += editLineRateEntryClosedHandler;
             editLineRateEntryView.ShowDialog();
 
             GC.Collect();
+        }
+        private void OpenEditLineRateEntryInLineModal(LineRateEntryTableModel entry)
+        {
+            OpenEditLineRateEntryModal(entry.EnteredDate, entry.LineRateEntryId);
         }
 
         private bool CanUpdateLineRateEntry()
