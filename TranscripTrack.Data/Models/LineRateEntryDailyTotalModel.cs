@@ -8,8 +8,5 @@ namespace TranscripTrack.Data.Models
     {
         public int TotalLines { get; set; }
         public decimal TotalPay { get; set; }
-
-        public string TotalLinesText => $"Total lines entered: {TotalLines}";
-        public string TotalPayText => $"Total pay earned: {TotalPay:C}";
     }
 }

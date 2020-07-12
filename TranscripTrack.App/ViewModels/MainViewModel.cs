@@ -47,6 +47,8 @@ namespace TranscripTrack.App.ViewModels
             ExitApplicationCommand = new RelayCommand(ExitApplication);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
+
+            DailyTotals = new List<LineRateEntryDailyTotalModel>();
         }
 
         private void ExitApplication()
@@ -156,6 +158,11 @@ namespace TranscripTrack.App.ViewModels
             set {
                 lineRateEntries = value;
                 OnPropertyChanged("LineRateEntries");
+
+                foreach (var entry in lineRateEntries)
+                {
+                    entry.HighlightRow = lineRateEntries.IndexOf(entry) % 2 == 1;
+                }
             }
         }
 
@@ -178,8 +185,8 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private LineRateEntryDailyTotalModel dailyTotals;
-        public LineRateEntryDailyTotalModel DailyTotals {
+        private List<LineRateEntryDailyTotalModel> dailyTotals;
+        public List<LineRateEntryDailyTotalModel> DailyTotals {
             get => dailyTotals;
             set {
                 dailyTotals = value;
@@ -240,7 +247,10 @@ namespace TranscripTrack.App.ViewModels
         private async Task LoadLineRateEntriesAsync()
         {
             LineRateEntries = await App.LineRateEntryDataService.GetForProfileAndDateAsync(LineEntryDate, ProfileId);
-            DailyTotals = await App.LineRateEntryDataService.GetTotalsForDayAsync(LineEntryDate, ProfileId);
+            DailyTotals = new List<LineRateEntryDailyTotalModel>()
+            {
+                await App.LineRateEntryDataService.GetTotalsForDayAsync(LineEntryDate, ProfileId)
+            };
         }
 
         private void OpenSelectProfileModal()

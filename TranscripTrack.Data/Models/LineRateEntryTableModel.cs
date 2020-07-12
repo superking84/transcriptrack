@@ -9,5 +9,6 @@ namespace TranscripTrack.Data.Models
         public int NumLines { get; set; }
         public DateTime EnteredDate { get; set; }
         public decimal AmountEarned { get; set; }
+        public bool HighlightRow { get; set; }
     }
 }
