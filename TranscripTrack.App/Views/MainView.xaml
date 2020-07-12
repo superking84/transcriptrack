@@ -8,6 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="550">
     <UserControl.Resources>
         <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
+            <Setter Property="CanUserResizeColumns" Value="False" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle1}"/>
             <Setter Property="CellStyle" Value="{DynamicResource CellStyle1}" />
         </Style>
@@ -44,7 +46,7 @@
         <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="0, 0, 0, 25">
             <Menu BorderThickness="0 0 0 1" BorderBrush="Black" Background="White" DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="E_xit" />
+                    <MenuItem Header="E_xit" Command="{Binding ExitApplicationCommand}" />
                 </MenuItem>
 
                 <MenuItem Header="_Profile">
@@ -122,8 +124,8 @@
                     </DataGrid.InputBindings>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Line Type" Width="80" Binding="{Binding LineRateType}" />
-                        <DataGridTextColumn Header="# Lines" Width="50" Binding="{Binding NumLines}" />
                         <DataGridTextColumn Header="Entered On" Width="70" Binding="{Binding EnteredDate, StringFormat=d}" />
+                        <DataGridTextColumn Header="# Lines" Width="50" Binding="{Binding NumLines}" />
                         <DataGridTextColumn Header="Amount" Width="120" Binding="{Binding AmountEarned, StringFormat=C}" />
                         <DataGridTemplateColumn Header="Action" Width="90" CanUserSort="False">
                             <DataGridTemplateColumn.CellTemplate>
@@ -150,8 +152,8 @@
 
                 <StackPanel HorizontalAlignment="Left" Grid.Row="2" Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Hello This is Text" />
-                        <TextBlock Text="Hello This is Text" />
+                        <TextBlock Text="{Binding DailyTotals.TotalLinesText}" />
+                        <TextBlock Text="{Binding DailyTotals.TotalPayText}" />
                     </StackPanel>
                 </StackPanel>
 

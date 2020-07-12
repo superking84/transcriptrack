@@ -30,7 +30,8 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand<LineRateEntryTableModel> EditLineRateEntryInLineCommand { get; private set; }
         public RelayCommand DeleteLineRateEntryCommand { get; private set; }
         public RelayCommand<LineRateEntryTableModel> DeleteLineRateEntryInLineCommand { get; private set; }
-        public RelayCommand TestDeleteCommand { get; private set; }
+        public RelayCommand ExitApplicationCommand { get; private set; }
+
         public MainViewModel()
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
@@ -43,8 +44,14 @@ namespace TranscripTrack.App.ViewModels
             EditLineRateEntryInLineCommand = new RelayCommand<LineRateEntryTableModel>(OpenEditLineRateEntryInLineModal);
             DeleteLineRateEntryCommand = new RelayCommand(ConfirmDeleteLineRateEntry, CanUpdateLineRateEntry);
             DeleteLineRateEntryInLineCommand = new RelayCommand<LineRateEntryTableModel>(ConfirmDeleteLineRateEntryInLine);
+            ExitApplicationCommand = new RelayCommand(ExitApplication);
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
+        }
+
+        private void ExitApplication()
+        {
+            App.Current.Shutdown();
         }
 
         private void OpenManageLineRatesModal()
@@ -78,7 +85,6 @@ namespace TranscripTrack.App.ViewModels
 
         private bool CanAddLineRateEntry()
         {
-            // TODO: Add condition to check if datepicker has a valid date selected
             return Profile is ProfileEditModel && (LineRates?.Any() == true);
         }
 
@@ -172,6 +178,16 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        private LineRateEntryDailyTotalModel dailyTotals;
+        public LineRateEntryDailyTotalModel DailyTotals {
+            get => dailyTotals;
+            set {
+                dailyTotals = value;
+                OnPropertyChanged("DailyTotals");
+            }
+        }
+
+
         public async Task LoadCurrentProfileAsync()
         {
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
@@ -194,7 +210,21 @@ namespace TranscripTrack.App.ViewModels
         {
             LineEntryDate = DateTime.Today;
 
-            await LoadCurrentProfileAsync();
+            if (Properties.UserSettings.Default.CurrentProfileId == default)
+            {
+                if (await App.ProfileDataService.ExistAnyAsync())
+                {
+                    OpenSelectProfileModal();
+                }
+                else
+                {
+                    OpenAddProfileModal();
+                }
+            }
+            else
+            {
+                await LoadCurrentProfileAsync();
+            }
         }
 
         public async void OnManageLineRatesClosed(object sender, EventArgs e)
@@ -210,6 +240,7 @@ namespace TranscripTrack.App.ViewModels
         private async Task LoadLineRateEntriesAsync()
         {
             LineRateEntries = await App.LineRateEntryDataService.GetForProfileAndDateAsync(LineEntryDate, ProfileId);
+            DailyTotals = await App.LineRateEntryDataService.GetTotalsForDayAsync(LineEntryDate, ProfileId);
         }
 
         private void OpenSelectProfileModal()

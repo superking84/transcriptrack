@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -97,6 +98,11 @@ namespace TranscripTrack.Logic
         public async Task<bool> ExistsAsync(int id)
         {
             return (await db.Profiles.FindAsync(id)) is Profile;
+        }
+
+        public async Task<bool> ExistAnyAsync()
+        {
+            return await db.Profiles.CountAsync() > 0;
         }
     }
 }
