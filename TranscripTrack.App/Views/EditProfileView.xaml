@@ -19,10 +19,10 @@
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
-            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="50" />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
         <Label Content="Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" />
@@ -32,7 +32,12 @@
         <Label Content="Currency" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
         <ComboBox ItemsSource="{Binding Path=Currencies}" SelectedValuePath="CurrencyId" SelectedValue="{Binding Path=Model.CurrencyId, Mode=TwoWay}" DisplayMemberPath="CurrencyCode" 
                   Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="178"></ComboBox>
-        <Button Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" 
-                Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditProfileWindow}"></Button>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Style="{DynamicResource DefaultButtonStyle}"
+                Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditProfileWindow}">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{StaticResource SaveIcon}" />
+                <Label Content="Save" />
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>

@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="35" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="75" />
@@ -46,7 +46,12 @@
             </b:Interaction.Triggers>
         </TextBox>
 
-        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" 
-                Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditLineRateEntryWindow}"/>
+        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Style="{DynamicResource DefaultButtonStyle}"
+                Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditLineRateEntryWindow}">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{StaticResource SaveIcon}" />
+                <Label Content="Save" />
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>

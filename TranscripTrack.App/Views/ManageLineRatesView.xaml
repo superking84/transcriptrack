@@ -20,7 +20,7 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Width="250" CanUserSortColumns="False"
+        <DataGrid Grid.Row="0" Width="250" CanUserSortColumns="False" Style="{DynamicResource DefaultDataGridStyle}"
                   SelectionMode="Single" ItemsSource="{Binding LineRates, Mode=TwoWay}"
                   SelectedItem="{Binding SelectedLineRate}" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
             <DataGrid.Columns>
@@ -29,7 +29,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="1"
+        <Button Grid.Row="1" Style="{DynamicResource DefaultButtonStyle}"
                 Width="60" Height="20" Content="Save" 
                 Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=ManageLineRatesWindow}" />
     </Grid>

@@ -7,6 +7,46 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/DrawImages.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}">
+                <Setter Property="CanUserResizeColumns" Value="False" />
+                <Setter Property="CanUserReorderColumns" Value="False" />
+                <Setter Property="CanUserResizeRows" Value="False" />
+                <Setter Property="RowHeaderWidth" Value="0" />
+                <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DefaultHeaderStyle}"/>
+                <Setter Property="CellStyle" Value="{DynamicResource DefaultCellStyle}" />
+            </Style>
+            
+            <Style x:Key="DefaultHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="SkyBlue" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="DefaultCellStyle" TargetType="DataGridCell">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            
+            <Style x:Key="NumberCellStyle" TargetType="DataGridCell">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+
+            <Style x:Key="NumberColumnHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="SkyBlue" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+            </Style>
+
+            <Style x:Key="DefaultButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="SkyBlue" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
