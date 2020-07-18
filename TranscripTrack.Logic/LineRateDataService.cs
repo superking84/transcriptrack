@@ -77,7 +77,7 @@ namespace TranscripTrack.Logic
             }
             
             var existingLineRateIds = existingLineRates.Select(lr => lr.LineRateId);
-            var recordsToDelete = db.LineRates.Where(lr => !existingLineRateIds.Contains(lr.LineRateId));
+            var recordsToDelete = db.LineRates.Where(lr => lr.ProfileId == profileId && !existingLineRateIds.Contains(lr.LineRateId));
             
             db.LineRates.RemoveRange(recordsToDelete);
 
