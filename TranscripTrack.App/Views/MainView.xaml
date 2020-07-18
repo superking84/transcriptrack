@@ -113,13 +113,13 @@
                     </DataGrid.InputBindings>
                     <!--Columns Are Here--> 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Line Type" Width="150" Binding="{Binding LineRateType}" />
-                        <DataGridTextColumn Header="Entered On" Width="100"  Binding="{Binding EnteredDate, StringFormat=d}" />
+                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="150" Binding="{Binding LineRateType}" />
+                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Entered On" Width="100"  Binding="{Binding EnteredDate, StringFormat=d}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
                                             Header="# Lines" Width="60" Binding="{Binding NumLines}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
                                             Header="Amount" Width="80" Binding="{Binding AmountEarned, StringFormat=C}" />
-                        <DataGridTemplateColumn Header="Action" Width="110" CanUserSort="False">
+                        <DataGridTemplateColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Action" Width="110" CanUserSort="False">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>

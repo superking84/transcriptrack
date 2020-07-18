@@ -14,7 +14,6 @@
                 <Setter Property="CanUserResizeRows" Value="False" />
                 <Setter Property="RowHeaderWidth" Value="0" />
                 <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DefaultHeaderStyle}"/>
-                <Setter Property="CellStyle" Value="{DynamicResource DefaultCellStyle}" />
             </Style>
             
             <Style x:Key="DefaultHeaderStyle" TargetType="DataGridColumnHeader">
@@ -27,10 +26,12 @@
 
             <Style x:Key="DefaultCellStyle" TargetType="DataGridCell">
                 <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
             </Style>
             
             <Style x:Key="NumberCellStyle" TargetType="DataGridCell">
                 <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
             </Style>
 
             <Style x:Key="NumberColumnHeaderStyle" TargetType="DataGridColumnHeader">

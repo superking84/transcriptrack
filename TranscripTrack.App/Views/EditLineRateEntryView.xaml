@@ -29,12 +29,12 @@
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"
                Content="Line Type"  />
-        <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"
+        <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"
                   ItemsSource="{Binding Path=LineRates}" SelectedValuePath="LineRateId" SelectedValue="{Binding Path=Model.LineRateId}" 
                   DisplayMemberPath="Description" />
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" 
                Content="# Lines" />
-        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"
                  Text="{Binding Path=Model.NumLinesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="PreviewTextInput">
