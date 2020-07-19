@@ -41,7 +41,7 @@
     </Viewbox>
 
     <Viewbox x:Key="OpenIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="25" Height="25">
+        <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>

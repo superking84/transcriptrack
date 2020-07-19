@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/DrawImages.xaml" />
+                <ResourceDictionary Source="/Resources/AppIcons.xaml" />
                 <ResourceDictionary Source="/Resources/AppStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
