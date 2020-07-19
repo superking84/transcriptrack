@@ -32,19 +32,21 @@
                 </MenuItem>
 
                 <MenuItem Header="_Profile">
-                    <MenuItem Header="Add _New" Command="{Binding AddProfileCommand}" />
-                    <MenuItem Header="_Edit Current" Command="{Binding EditProfileCommand}" />
+                    <MenuItem Header="_Add New Profile" Command="{Binding AddProfileCommand}" />
+                    <MenuItem Header="_Edit Current Profile" Command="{Binding EditProfileCommand}" />
                     <MenuItem Header="_Change Profiles" Command="{Binding SelectProfileCommand}" />
-                    <MenuItem Header="_Delete Current" Command="{Binding DeleteProfileCommand}" />
+                    <MenuItem Header="_Delete Current Profile" Command="{Binding DeleteProfileCommand}" />
                 </MenuItem>
 
                 <MenuItem Header="_Manage Line Rates" Command="{Binding ManageLineRatesCommand}" />
 
                 <MenuItem Header="_Line Entry">
-                    <MenuItem Header="Add _New Entry" Command="{Binding AddLineRateEntryCommand}" />
+                    <MenuItem Header="_Add New Entry" Command="{Binding AddLineRateEntryCommand}" />
                     <MenuItem Header="_Edit Selected Entry" Command="{Binding EditLineRateEntryCommand}" />
                     <MenuItem Header="_Delete Selected Entry" Command="{Binding DeleteLineRateEntryCommand}" />
                 </MenuItem>
+                
+                <MenuItem Header="View _Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
             </Menu>
         </DockPanel>
 
@@ -58,10 +60,10 @@
                 <Rectangle VerticalAlignment="Stretch" Width="1" Height="20" Margin="0.5" Stroke="DarkGray" />
 
                 <MenuItem Icon="{StaticResource ManageLineRatesIcon}" ToolTip="Manage Line Rates" Command="{Binding ManageLineRatesCommand}" />
+                <MenuItem Icon="{StaticResource VisualTotalsIcon}" ToolTip="View Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
             </Menu>
         </DockPanel>
 
-        <!-- Calendar and line entry table -->
         <Border Margin="50, 5, 50, 0" Grid.Row="2" Grid.Column="0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -111,7 +113,7 @@
                         <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditLineRateEntryCommand}" />
                         <KeyBinding Key="Delete" Command="{Binding DeleteLineRateEntryCommand}" />
                     </DataGrid.InputBindings>
-                    <!--Columns Are Here--> 
+                    
                     <DataGrid.Columns>
                         <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="150" Binding="{Binding LineRateType}" />
                         <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Entered On" Width="100"  Binding="{Binding EnteredDate, StringFormat=d}" />

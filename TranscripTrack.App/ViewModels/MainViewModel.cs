@@ -17,6 +17,7 @@ namespace TranscripTrack.App.ViewModels
         private EditProfileView editProfileView;
         private SelectProfileView selectProfileView;
         private ManageLineRatesView manageLineRatesView;
+        private LineRateEntryTotalsView lineRateEntryTotalsView;
 
         private readonly EventHandler editLineRateEntryClosedHandler;
 
@@ -25,6 +26,7 @@ namespace TranscripTrack.App.ViewModels
         public RelayCommand EditProfileCommand { get; private set; }
         public RelayCommand DeleteProfileCommand { get; private set; }
         public RelayCommand ManageLineRatesCommand { get; private set; }
+        public RelayCommand ViewLineRateEntryTotalsCommand { get; private set; }
         public RelayCommand AddLineRateEntryCommand { get; private set; }
         public RelayCommand EditLineRateEntryCommand { get; private set; }
         public RelayCommand<LineRateEntryTableModel> EditLineRateEntryInLineCommand { get; private set; }
@@ -36,9 +38,10 @@ namespace TranscripTrack.App.ViewModels
         {
             SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
-            EditProfileCommand = new RelayCommand(OpenEditProfileModal, CanUpdateProfile);
-            DeleteProfileCommand = new RelayCommand(ConfirmDeleteProfile, CanUpdateProfile);
-            ManageLineRatesCommand = new RelayCommand(OpenManageLineRatesModal, CanManageLineRates);
+            EditProfileCommand = new RelayCommand(OpenEditProfileModal, IsProfileLoaded);
+            DeleteProfileCommand = new RelayCommand(ConfirmDeleteProfile, IsProfileLoaded);
+            ManageLineRatesCommand = new RelayCommand(OpenManageLineRatesModal, IsProfileLoaded);
+            ViewLineRateEntryTotalsCommand = new RelayCommand(OpenLineRateEntryTotalsModal, IsProfileLoaded);
             AddLineRateEntryCommand = new RelayCommand(OpenAddLineEntryModal, CanAddLineRateEntry);
             EditLineRateEntryCommand = new RelayCommand(OpenEditLineRateEntryModal, CanUpdateLineRateEntry);
             EditLineRateEntryInLineCommand = new RelayCommand<LineRateEntryTableModel>(OpenEditLineRateEntryInLineModal);
@@ -48,12 +51,20 @@ namespace TranscripTrack.App.ViewModels
 
             editLineRateEntryClosedHandler = new EventHandler(OnEditLineRateEntryClosed);
 
-            DailyTotals = new List<LineRateEntryDailyTotalModel>();
+            DailyTotals = new List<LineRateEntryTotalModel>();
         }
 
         private void ExitApplication()
         {
             App.Current.Shutdown();
+        }
+
+        private void OpenLineRateEntryTotalsModal()
+        {
+            lineRateEntryTotalsView = new LineRateEntryTotalsView(LineEntryDate.Month, LineEntryDate.Year);
+            lineRateEntryTotalsView.ShowDialog();
+
+            GC.Collect();
         }
 
         private void OpenManageLineRatesModal()
@@ -87,15 +98,10 @@ namespace TranscripTrack.App.ViewModels
 
         private bool CanAddLineRateEntry()
         {
-            return Profile is ProfileEditModel && (LineRates?.Any() == true);
+            return IsProfileLoaded() && (LineRates?.Any() == true);
         }
 
-        private bool CanUpdateProfile()
-        {
-            return Profile is ProfileEditModel;
-        }
-
-        private bool CanManageLineRates()
+        private bool IsProfileLoaded()
         {
             return Profile is ProfileEditModel;
         }
@@ -185,8 +191,8 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
-        private List<LineRateEntryDailyTotalModel> dailyTotals;
-        public List<LineRateEntryDailyTotalModel> DailyTotals {
+        private List<LineRateEntryTotalModel> dailyTotals;
+        public List<LineRateEntryTotalModel> DailyTotals {
             get => dailyTotals;
             set {
                 dailyTotals = value;
@@ -257,7 +263,7 @@ namespace TranscripTrack.App.ViewModels
         private async Task LoadLineRateEntriesAsync()
         {
             LineRateEntries = await App.LineRateEntryDataService.GetForProfileAndDateAsync(LineEntryDate, ProfileId);
-            DailyTotals = new List<LineRateEntryDailyTotalModel>()
+            DailyTotals = new List<LineRateEntryTotalModel>()
             {
                 await App.LineRateEntryDataService.GetTotalsForDayAsync(LineEntryDate, ProfileId)
             };
