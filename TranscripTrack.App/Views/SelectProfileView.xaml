@@ -31,7 +31,7 @@
                 <KeyBinding Key="Return" Command="{Binding ItemSelectCommand}" CommandParameter="{Binding ElementName=SelectProfileWindow}" />
             </DataGrid.InputBindings>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Profile" Width="160" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Profile" Width="162" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>
 
