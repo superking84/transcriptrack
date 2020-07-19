@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TranscripTrack.Data;
 using TranscripTrack.Logic;
 
@@ -25,6 +26,13 @@ namespace TranscripTrack.App
             LineRateDataService = new LineRateDataService(DbContext);
             LineRateEntryDataService = new LineRateEntryDataService(DbContext);
             ProfileDataService = new ProfileDataService(DbContext);
+
+            // prevent tooltips from closing on their own
+            // https://stackoverflow.com/questions/896574/forcing-a-wpf-tooltip-to-stay-on-the-screen
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+                typeof(DependencyObject), 
+                new FrameworkPropertyMetadata(int.MaxValue)
+            );
         }
     }
 }
