@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TranscripTrack.Data;
 using TranscripTrack.Data.Models;
@@ -74,7 +77,7 @@ namespace TranscripTrack.Logic
                           }).ToListAsync();
         }
 
-        public async Task<LineRateEntryDailyTotalModel> GetTotalsForDayAsync(DateTime date, int profileId)
+        public async Task<LineRateEntryTotalModel> GetTotalsForDayAsync(DateTime date, int profileId)
         {
             var allLineRateEntries = await (from lre in db.LineRateEntries
                                             join lr in db.LineRates on lre.LineRateId equals lr.LineRateId
@@ -83,11 +86,54 @@ namespace TranscripTrack.Logic
                                             select new { lre.NumLines, AmountEarned = lre.NumLines * lr.Rate / 100 })
                                         .ToListAsync();
 
-            return new LineRateEntryDailyTotalModel
+            return new LineRateEntryTotalModel
             {
                 TotalLines = allLineRateEntries.Sum(lre => lre.NumLines),
                 TotalPay = allLineRateEntries.Sum(lre => lre.AmountEarned)
             };
+        }
+
+        public async Task<LineRateEntryTotalModel> GetGrandTotalForMonthAsync(int month, int year, int profileId)
+        {
+            var allLineRateEntries = await GetForMonthAsync(month, year, profileId);
+
+            return new LineRateEntryTotalModel
+            {
+                TotalLines = allLineRateEntries.Sum(lre => lre.TotalLines),
+                TotalPay = allLineRateEntries.Sum(lre => lre.TotalPay)
+            };
+        }
+
+        public async Task<List<LineRateEntryTotalModel>> GetTotalsByLineRateForMonthAsync(int month, int year, int profileId)
+        {
+            var allLineRateEntries = await GetForMonthAsync(month, year, profileId);
+
+            return allLineRateEntries
+                .GroupBy(lre => lre.LineRateId)
+                .Select(grp => new LineRateEntryTotalModel
+                {
+                    LineRateId = grp.Key,
+                    LineRate = grp.First().LineRate,
+                    TotalLines = grp.Sum(lre => lre.TotalLines),
+                    TotalPay = grp.Sum(lre => lre.TotalPay)
+                })
+                .ToList();
+        }
+
+        private async Task<List<LineRateEntryTotalModel>> GetForMonthAsync(int month, int year, int profileId)
+        {
+            return await (from lre in db.LineRateEntries
+                          join lr in db.LineRates on lre.LineRateId equals lr.LineRateId
+                          where lr.ProfileId == profileId
+                          && lre.EnteredDate.Month == month
+                          && lre.EnteredDate.Year == year
+                          select new LineRateEntryTotalModel 
+                          { 
+                              LineRateId = lre.LineRateId,
+                              LineRate = lr.Description,
+                              TotalLines = lre.NumLines, 
+                              TotalPay = lre.NumLines * lr.Rate / 100 
+                          }).ToListAsync();
         }
     }
 }
