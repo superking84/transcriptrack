@@ -82,17 +82,20 @@ namespace TranscripTrack.Logic
             return null;
         }
 
-        public async Task<List<ProfileSelectTableModel>> GetSelectProfileListAsync()
+        public async Task<List<ProfileSelectTableModel>> GetSelectProfileListAsync(int currentProfileId)
         {
             return await (from p in db.Profiles
                           join c in db.Currencies on p.CurrencyId equals c.CurrencyId
+                          where p.ProfileId != currentProfileId
                           select new ProfileSelectTableModel
                           {
                               ProfileId = p.ProfileId,
                               Name = p.Name,
                               Client = p.Client,
                               CurrencyCode = c.CurrencyCode
-                          }).ToListAsync();
+                          })
+                          .OrderBy(p => p.Client)
+                          .ToListAsync();
         }
 
         public async Task<bool> ExistsAsync(int id)

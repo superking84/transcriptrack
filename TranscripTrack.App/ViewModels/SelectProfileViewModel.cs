@@ -43,7 +43,7 @@ namespace TranscripTrack.App.ViewModels
 
         public override async void OnLoaded(object sender, EventArgs e)
         {
-            Profiles = await App.ProfileDataService.GetSelectProfileListAsync();
+            Profiles = await App.ProfileDataService.GetSelectProfileListAsync(Properties.UserSettings.Default.CurrentProfileId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using TranscripTrack.Data;
@@ -58,6 +59,12 @@ namespace TranscripTrack.App.ViewModels
             if (!isAdd)
             {
                 Model = await App.LineRateEntryDataService.GetModelAsync(lineRateEntryId.Value);
+            }
+            else
+            {
+                // for now, just default to the first option to remove an extra step for the user
+                // since it defaults to blank
+                Model.LineRateId = LineRates.First().LineRateId;
             }
         }
 
