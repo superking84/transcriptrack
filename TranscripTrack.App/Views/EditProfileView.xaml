@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
-      d:DesignHeight="210" d:DesignWidth="310"
+      d:DesignHeight="180" d:DesignWidth="310"
       Height="210" Width="310" WindowStartupLocation="CenterOwner"
       Title="{Binding Path=Title}">
     <b:Interaction.Triggers>
@@ -18,7 +18,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
-            <RowDefinition Height="25" />
             <RowDefinition Height="55" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,12 +26,10 @@
         </Grid.ColumnDefinitions>
         <Label Content="Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" />
         <TextBox Grid.Row="0" Grid.Column="1" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="178" Text="{Binding Path=Model.Name, Mode=TwoWay}" />
-        <Label Content="Client" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        <TextBox Grid.Row="1" Grid.Column="1" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="178" Text="{Binding Path=Model.Client, Mode=TwoWay}" />
-        <Label Content="Currency" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+        <Label Content="Currency" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
         <ComboBox ItemsSource="{Binding Path=Currencies}" SelectedValuePath="CurrencyId" SelectedValue="{Binding Path=Model.CurrencyId, Mode=TwoWay}" DisplayMemberPath="CurrencyCode" 
-                  Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="178"></ComboBox>
-        <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="100" Margin="0 20 60 0"
+                  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="178"></ComboBox>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="100" Margin="0 20 60 0"
                 Style="{DynamicResource DefaultButtonStyle}" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditProfileWindow}">
             <StackPanel Orientation="Horizontal">
                 <Label Content="{StaticResource SaveIcon}" />

@@ -3,8 +3,6 @@
     public class ProfileEditModel : BaseModel
     {
         private string name;
-        private string client;
-
         private int currencyId;
 
         public int? ProfileId { get; set; }
@@ -13,14 +11,6 @@
             set {
                 name = value;
                 OnPropertyChanged("Name");
-            }
-        }
-
-        public string Client {
-            get => client;
-            set {
-                client = value;
-                OnPropertyChanged("Client");
             }
         }
 

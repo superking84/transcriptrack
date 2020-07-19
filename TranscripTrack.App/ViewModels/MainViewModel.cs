@@ -203,7 +203,7 @@ namespace TranscripTrack.App.ViewModels
 
             if (Profile is ProfileEditModel)
             {
-                Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name} ({Profile.Client})";
+                Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name}";
             }
             else
             {

@@ -30,7 +30,6 @@ namespace TranscripTrack.Logic
             {
                 profile = await db.Profiles.FindAsync(model.ProfileId.Value);
                 profile.Name = model.Name;
-                profile.Client = model.Client;
                 profile.CurrencyId = model.CurrencyId;
 
                 return await EditAsync(profile);
@@ -40,7 +39,6 @@ namespace TranscripTrack.Logic
                 profile = new Profile
                 {
                     Name = model.Name,
-                    Client = model.Client,
                     CurrencyId = model.CurrencyId
                 };
 
@@ -74,7 +72,6 @@ namespace TranscripTrack.Logic
                 {
                     ProfileId = existingProfile.ProfileId,
                     Name = existingProfile.Name,
-                    Client = existingProfile.Client,
                     CurrencyId = existingProfile.CurrencyId
                 };
             }
@@ -84,18 +81,15 @@ namespace TranscripTrack.Logic
 
         public async Task<List<ProfileSelectTableModel>> GetSelectProfileListAsync(int currentProfileId)
         {
-            return await (from p in db.Profiles
-                          join c in db.Currencies on p.CurrencyId equals c.CurrencyId
-                          where p.ProfileId != currentProfileId
-                          select new ProfileSelectTableModel
-                          {
-                              ProfileId = p.ProfileId,
-                              Name = p.Name,
-                              Client = p.Client,
-                              CurrencyCode = c.CurrencyCode
-                          })
-                          .OrderBy(p => p.Client)
-                          .ToListAsync();
+            return await db.Profiles
+                .Where(p => p.ProfileId != currentProfileId)
+                .Select(p => new ProfileSelectTableModel
+                {
+                    ProfileId = p.ProfileId,
+                    Name = p.Name
+                })
+                .OrderBy(p => p.Name)
+                .ToListAsync();
         }
 
         public async Task<bool> ExistsAsync(int id)

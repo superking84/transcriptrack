@@ -50,7 +50,6 @@ namespace TranscripTrack.App.ViewModels
         private bool CanSaveProfile(Window window)
         {
             return !string.IsNullOrWhiteSpace(Model.Name) &&
-                !string.IsNullOrWhiteSpace(Model.Client) &&
                 Model.CurrencyId != default;
         }
 
@@ -63,7 +62,6 @@ namespace TranscripTrack.App.ViewModels
                 var profileModel = await App.ProfileDataService.GetModelAsync(profileId.Value);
                 Model.ProfileId = profileId.Value;
                 Model.Name = profileModel.Name;
-                Model.Client = profileModel.Client;
                 Model.CurrencyId = profileModel.CurrencyId;
             }
         }

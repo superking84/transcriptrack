@@ -6,7 +6,6 @@ namespace TranscripTrack.Data
     {
         public int ProfileId { get; set; }
         public string Name { get; set; }
-        public string Client { get; set; }
 
         public int CurrencyId { get; set; }
         public Currency Currency { get; set; }
