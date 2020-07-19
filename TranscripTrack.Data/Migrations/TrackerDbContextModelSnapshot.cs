@@ -14,7 +14,7 @@ namespace TranscripTrack.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4");
+                .HasAnnotation("ProductVersion", "3.1.6");
 
             modelBuilder.Entity("TranscripTrack.Data.Currency", b =>
                 {
@@ -79,9 +79,6 @@ namespace TranscripTrack.Data.Migrations
                     b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Client")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("INTEGER");

@@ -9,14 +9,14 @@ using TranscripTrack.Data;
 namespace TranscripTrack.Data.Migrations
 {
     [DbContext(typeof(TrackerDbContext))]
-    [Migration("20200523160403_InitialCreate")]
+    [Migration("20200719155049_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4");
+                .HasAnnotation("ProductVersion", "3.1.6");
 
             modelBuilder.Entity("TranscripTrack.Data.Currency", b =>
                 {
@@ -81,9 +81,6 @@ namespace TranscripTrack.Data.Migrations
                     b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Client")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("INTEGER");

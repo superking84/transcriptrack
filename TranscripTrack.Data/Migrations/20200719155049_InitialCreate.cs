@@ -27,7 +27,6 @@ namespace TranscripTrack.Data.Migrations
                     ProfileId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
-                    Client = table.Column<string>(nullable: true),
                     CurrencyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -99,8 +98,8 @@ namespace TranscripTrack.Data.Migrations
                 column: "CurrencyId");
 
             migrationBuilder.InsertData(
-                "Currencies", 
-                "CurrencyCode", 
+                "Currencies",
+                "CurrencyCode",
                 new object[] { "AUD", "CAD", "GBP", "NZD", "USD" });
         }
 
