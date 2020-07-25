@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Viewbox x:Key="AddUserIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="25" Height="25">
+    <Viewbox x:Key="AddUserIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>
@@ -21,8 +21,8 @@
         </Rectangle>
     </Viewbox>
 
-    <Viewbox x:Key="EditIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="25" Height="25">
+    <Viewbox x:Key="EditIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>
@@ -40,8 +40,8 @@
         </Rectangle>
     </Viewbox>
 
-    <Viewbox x:Key="OpenIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="16" Height="16">
+    <Viewbox x:Key="OpenIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>
@@ -94,8 +94,8 @@
         </Rectangle>
     </Viewbox>
     
-    <Viewbox x:Key="DeleteUserIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="25" Height="25">
+    <Viewbox x:Key="DeleteUserIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>
@@ -113,8 +113,8 @@
         </Rectangle>
     </Viewbox>
 
-    <Viewbox x:Key="ManageLineRatesIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="25" Height="25">
+    <Viewbox x:Key="ManageLineRatesIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>
@@ -171,8 +171,8 @@
         </Rectangle>
     </Viewbox>
 
-    <Viewbox x:Key="VisualTotalsIcon" Width="Auto" Height="Auto" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Rectangle Width="16" Height="16">
+    <Viewbox x:Key="VisualTotalsIcon" x:Shared="False" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Rectangle Width="40" Height="40">
             <Rectangle.Fill>
                 <DrawingBrush>
                     <DrawingBrush.Drawing>

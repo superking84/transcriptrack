@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="550">
+             d:DesignHeight="650" d:DesignWidth="900">
     <UserControl.Resources>
         
     </UserControl.Resources>
@@ -21,12 +21,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="625" />
+            <ColumnDefinition Width="900" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="0, 0, 0, 5">
-            <Menu BorderThickness="0 0 0 1" BorderBrush="Gainsboro" Background="LightGray" DockPanel.Dock="Top">
+            <Menu FontSize="16" BorderThickness="0 0 0 1" BorderBrush="Gainsboro" Background="LightGray" DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="E_xit" Command="{Binding ExitApplicationCommand}" />
                 </MenuItem>
@@ -51,26 +51,28 @@
         </DockPanel>
 
         <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <Menu BorderThickness="0 0 0 1" BorderBrush="Gainsboro" Background="White" DockPanel.Dock="Top" Margin="0 -5 0 0">
-                <MenuItem Icon="{StaticResource AddUserIcon}" ToolTip="Add New Profile" Command="{Binding AddProfileCommand}" />
-                <MenuItem Icon="{StaticResource EditIcon}" ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" />
-                <MenuItem Icon="{StaticResource OpenIcon}" ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" />
-                <MenuItem Icon="{StaticResource DeleteUserIcon}" ToolTip="Delete Current Profile" Command="{Binding DeleteProfileCommand}" />
+            <Border BorderThickness="0 0 0 1" BorderBrush="Gainsboro" Background="White" DockPanel.Dock="Top" Padding="0 0 0 5">
+                <StackPanel Orientation="Horizontal" >
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource AddUserIcon}" ToolTip="Add New Profile" Command="{Binding AddProfileCommand}" />
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource EditIcon}" ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" />
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource OpenIcon}" ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" />
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource DeleteUserIcon}" ToolTip="Delete Current Profile" Command="{Binding DeleteProfileCommand}" />
+                
+                    <Rectangle VerticalAlignment="Stretch" Width="1" Height="40" Margin="0 0 10 0" Stroke="DarkGray" />
 
-                <Rectangle VerticalAlignment="Stretch" Width="1" Height="20" Margin="0.5" Stroke="DarkGray" />
-
-                <MenuItem Icon="{StaticResource ManageLineRatesIcon}" ToolTip="Manage Line Rates" Command="{Binding ManageLineRatesCommand}" />
-                <MenuItem Icon="{StaticResource VisualTotalsIcon}" ToolTip="View Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
-            </Menu>
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource ManageLineRatesIcon}" ToolTip="Manage Line Rates" Command="{Binding ManageLineRatesCommand}" />
+                    <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource VisualTotalsIcon}" ToolTip="View Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
+                </StackPanel>
+            </Border>
         </DockPanel>
 
-        <Border Margin="50, 5, 50, 0" Grid.Row="2" Grid.Column="0">
+        <Border Margin="50, 40, 50, 0" Grid.Row="2" Grid.Column="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
                     <RowDefinition Height="225" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="35" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Viewbox Grid.Row="0" HorizontalAlignment="Right" Margin="0 0 0 10">
@@ -83,9 +85,10 @@
                     </DatePicker>
                 </Viewbox>
 
-                <DataGrid Grid.Row="1" Width="Auto" Style="{DynamicResource DefaultDataGridStyle}" Background="White" BorderThickness="2" BorderBrush="Black" CanUserSortColumns="False"
-                      SelectionMode="Single" ItemsSource="{Binding LineRateEntries}" SelectedItem="{Binding SelectedLineRateEntry, Mode=TwoWay}"
-                      IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
+                <DataGrid Grid.Row="1" Width="Auto" Style="{DynamicResource DefaultDataGridStyle}" 
+                          Background="White" BorderThickness="2" BorderBrush="Black" CanUserSortColumns="False"
+                          SelectionMode="Single" ItemsSource="{Binding LineRateEntries}" SelectedItem="{Binding SelectedLineRateEntry, Mode=TwoWay}"
+                          IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Add New..." Command="{Binding AddLineRateEntryCommand}" />
@@ -115,26 +118,26 @@
                     </DataGrid.InputBindings>
                     
                     <DataGrid.Columns>
-                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="150" Binding="{Binding LineRateType}" />
-                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Entered On" Width="100"  Binding="{Binding EnteredDate, StringFormat=d}" />
+                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="200" Binding="{Binding LineRateType}" />
+                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Entered On" Width="150"  Binding="{Binding EnteredDate, StringFormat=d}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
-                                            Header="# Lines" Width="60" Binding="{Binding NumLines}" />
+                                            Header="# Lines" Width="100" Binding="{Binding NumLines}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
-                                            Header="Amount" Width="80" Binding="{Binding AmountEarned, StringFormat=C}" />
-                        <DataGridTemplateColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Action" Width="110" CanUserSort="False">
+                                            Header="Amount" Width="100" Binding="{Binding AmountEarned, StringFormat=C}" />
+                        <DataGridTemplateColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Action" Width="150" CanUserSort="False">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
                                             <ColumnDefinition Width="25" />
-                                            <ColumnDefinition Width="25" />
-                                            <ColumnDefinition Width="25" />
+                                            <ColumnDefinition Width="30" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Column="0" Content="{StaticResource EditIcon}" ToolTip="Edit" Background="RoyalBlue" Cursor="Hand"
+                                        <Button Grid.Column="0" Content="{StaticResource EditIcon}" ToolTip="Edit" Background="DodgerBlue" Cursor="Hand"
                                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.EditLineRateEntryInLineCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
-                                        <Button Grid.Column="2" Content="{StaticResource TrashIcon}" ToolTip="Delete" Background="OrangeRed" Cursor="Hand"
+                                        <Button Grid.Column="2" Content="{StaticResource TrashIcon}" ToolTip="Delete" Background="Tomato" Cursor="Hand"
                                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.DeleteLineRateEntryInLineCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
                                     </Grid>
@@ -144,7 +147,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 
-                <DataGrid Grid.Row="2" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyle1}"
+                <DataGrid FontSize="16" Grid.Row="2" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyle1}"
                           Background="White" BorderThickness="2 0 2 1" BorderBrush="Black"
                           SelectionMode="Single" HeadersVisibility="None" ItemsSource="{Binding DailyTotals}" 
                           AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal">
@@ -154,11 +157,11 @@
                         </Style>
                     </DataGrid.CellStyle>
                     <DataGrid.Columns>
+                        <DataGridTextColumn Width="200" />
                         <DataGridTextColumn Width="150" />
-                        <DataGridTextColumn Width="100" />
-                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="60" Binding="{Binding TotalLines}" />
-                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="80" Binding="{Binding TotalPay, StringFormat=C}" />
-                        <DataGridTextColumn Width="110" />
+                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="100" Binding="{Binding TotalLines}" />
+                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="100" Binding="{Binding TotalPay, StringFormat=C}" />
+                        <DataGridTextColumn Width="150" />
                     </DataGrid.Columns>
                 </DataGrid>
 

@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
-      Height="225" Width="350" WindowStartupLocation="CenterOwner"
+      Height="225" Width="400" WindowStartupLocation="CenterOwner"
       ResizeMode="CanMinimize"
       Title="{Binding Path=Title}">
     <b:Interaction.Triggers>
@@ -18,23 +18,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="35" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="125" />
+            <ColumnDefinition Width="175" />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
         
-        <Label Content="Company Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="25"
+        <Label FontSize="16" Content="Company Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <TextBox FontSize="16" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="30"
                  Text="{Binding Path=Model.Name, Mode=TwoWay}" />
         
-        <Label Content="Currency" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
-        <ComboBox ItemsSource="{Binding Path=Currencies}" SelectedValuePath="CurrencyId" SelectedValue="{Binding Path=Model.CurrencyId, Mode=TwoWay}" DisplayMemberPath="CurrencyCode" 
-                  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="25"></ComboBox>
+        <Label FontSize="16" Content="Currency" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+        <ComboBox FontSize="16" ItemsSource="{Binding Path=Currencies}" SelectedValuePath="CurrencyId" SelectedValue="{Binding Path=Model.CurrencyId, Mode=TwoWay}" DisplayMemberPath="CurrencyCode" 
+                  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="30"></ComboBox>
 
-        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Style="{DynamicResource DefaultButtonStyle}" 
-                Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditProfileWindow}">
+        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Margin="-50 10 0 0"
+                Style="{DynamicResource DefaultButtonStyle}" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditProfileWindow}">
             <StackPanel Orientation="Horizontal">
                 <Label Content="{StaticResource SaveIcon}" />
                 <Label Content="Save" />
