@@ -46,7 +46,7 @@
                     <MenuItem Header="_Delete Selected Entry" Command="{Binding DeleteLineRateEntryCommand}" />
                 </MenuItem>
                 
-                <MenuItem Header="View _Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
+                <MenuItem Header="View Monthly _Totals" Command="{Binding ViewLineRateEntryTotalsCommand}" />
             </Menu>
         </DockPanel>
 

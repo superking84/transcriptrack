@@ -24,8 +24,50 @@
                   SelectionMode="Single" ItemsSource="{Binding LineRates, Mode=TwoWay}"
                   SelectedItem="{Binding SelectedLineRate}" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Description" Width="150" Binding="{Binding Description}" />
-                <DataGridTextColumn Header="Rate (CPL)" Width="*" Binding="{Binding RateText}" />
+                <DataGridTextColumn Width="150" Binding="{Binding Description}">
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext}" Orientation="Horizontal" >
+                                <StackPanel.ToolTip>
+                                    <ToolTip DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                        <ToolTip.Template>
+                                            <ControlTemplate>
+                                                <StackPanel Orientation="Vertical" MaxWidth="200" Background="WhiteSmoke">
+                                                    <TextBlock Padding="15 15 15 5" FontWeight="Bold" Text="{Binding DescriptionTooltipTitle}" />
+                                                    <TextBlock Padding="15 5 15 15" TextWrapping="Wrap" Text="{Binding DescriptionTooltipMessage}" />
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </ToolTip.Template>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <Label Content="Description" />
+                                <Label Content="{DynamicResource QuestionIcon}" Width="25" Margin="-10 0 0 0" Cursor="Hand" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn Width="*" Binding="{Binding RateText}">
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext}" Orientation="Horizontal" >
+                                <StackPanel.ToolTip>
+                                    <ToolTip DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                        <ToolTip.Template>
+                                            <ControlTemplate>
+                                                <StackPanel Orientation="Vertical" MaxWidth="200" Background="WhiteSmoke">
+                                                    <TextBlock Padding="15 15 15 5" FontWeight="Bold" Text="{Binding CPLTooltipTitle}" />
+                                                    <TextBlock Padding="15 5 15 15" TextWrapping="Wrap" Text="{Binding CPLTooltipMessage}" />
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </ToolTip.Template>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <Label Content="Pay Rate (CPL)" />
+                                <Label Content="{DynamicResource QuestionIcon}" Width="25" Margin="-10 0 0 0" Cursor="Hand" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

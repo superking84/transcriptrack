@@ -19,10 +19,21 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        public string DescriptionTooltipTitle { get; set; }
+        public string DescriptionTooltipMessage { get; set; }
+
+        public string CPLTooltipTitle { get; set; }
+        public string CPLTooltipMessage { get; set; }
+
         public ManageLineRatesViewModel()
         {
             Title = "Manage Line Rates";
+            
+            DescriptionTooltipTitle = "Description";
+            DescriptionTooltipMessage = "A description of the type of lines being done (regular typing, QA, VR, etc.)";
 
+            CPLTooltipTitle = "Pay Rate (CPL)";
+            CPLTooltipMessage = "Pay rate in cents per line.";
             SaveCommand = new RelayCommand<Window>(SaveChangesAsync);
                 
             LineRates = new List<LineRateEditModel>();

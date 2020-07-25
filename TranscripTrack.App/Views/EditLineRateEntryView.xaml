@@ -7,7 +7,7 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
-        Title="{Binding Title}" Height="200" Width="300" WindowStartupLocation="CenterOwner">
+        Title="{Binding Title}" Height="225" Width="350" WindowStartupLocation="CenterOwner">
     <Window.InputBindings>
         <KeyBinding Key="Return" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=EditLineRateEntryWindow}" />
     </Window.InputBindings>
@@ -16,25 +16,25 @@
             <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoaded" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
-    <Grid Margin="10">
+    <Grid Margin="10 20 10 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="75" />
+            <ColumnDefinition Width="125" />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"
-               Content="Line Type"  />
-        <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"
+               Content="Line Rate"  />
+        <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="25"
                   ItemsSource="{Binding Path=LineRates}" SelectedValuePath="LineRateId" SelectedValue="{Binding Path=Model.LineRateId}" 
                   DisplayMemberPath="Description" />
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" 
                Content="# Lines" />
-        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="25"
                  Text="{Binding Path=Model.NumLinesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="PreviewTextInput">
