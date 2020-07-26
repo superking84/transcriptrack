@@ -19,6 +19,7 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        public string InstructionMessage { get; set; }
         public string DescriptionTooltipTitle { get; set; }
         public string DescriptionTooltipMessage { get; set; }
 
@@ -28,7 +29,9 @@ namespace TranscripTrack.App.ViewModels
         public ManageLineRatesViewModel()
         {
             Title = "Manage Line Rates";
-            
+
+            InstructionMessage = "* Enter one or more pay rates above, then press Save to save your changes.";
+
             DescriptionTooltipTitle = "Description";
             DescriptionTooltipMessage = "A description of the type of lines being done (regular typing, QA, VR, etc.)";
 

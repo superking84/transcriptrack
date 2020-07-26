@@ -6,7 +6,7 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="350" Width="400"
+        Title="{Binding Title}" Height="380" Width="400"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
@@ -18,10 +18,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Width="300" CanUserSortColumns="False" Style="{DynamicResource DefaultDataGridStyle}"
+        <DataGrid Grid.Row="0" Width="300"  CanUserSortColumns="False" Style="{DynamicResource DefaultDataGridStyle}"
                   SelectionMode="Single" ItemsSource="{Binding LineRates, Mode=TwoWay}"
                   SelectedItem="{Binding SelectedLineRate}" AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
             <DataGrid.Columns>
@@ -42,7 +42,7 @@
                                     </ToolTip>
                                 </StackPanel.ToolTip>
                                 <Label Content="Description" />
-                                <Label Content="{DynamicResource QuestionIcon}" Width="25" Margin="-10 0 0 0" Cursor="Hand" />
+                                <Label Content="{DynamicResource QuestionIcon}" Style="{StaticResource TooltipIconStyle}"  />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
@@ -64,7 +64,7 @@
                                     </ToolTip>
                                 </StackPanel.ToolTip>
                                 <Label Content="Pay Rate (CPL)" />
-                                <Label Content="{DynamicResource QuestionIcon}" Width="25" Margin="-10 0 0 0" Cursor="Hand" />
+                                <Label Content="{DynamicResource QuestionIcon}" Style="{StaticResource TooltipIconStyle}" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
@@ -80,6 +80,6 @@
             </StackPanel>
         </Button>
 
-        <TextBlock Grid.Row="2" Text="Testing Placement of text block" Margin="60 0 0 0" />
+        <TextBlock Grid.Row="2" Width="300" TextWrapping="Wrap" Text="{Binding InstructionMessage}" Margin="0 20 0 0" />
     </Grid>
 </Window>

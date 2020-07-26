@@ -5,35 +5,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="270" Width="350"
+        Title="{Binding Title}" Height="350" Width="350"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoaded" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
-    <Grid Margin="10 20 10 10">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Width="250" CanUserSortColumns="False" Style="{DynamicResource DefaultDataGridStyle}"
+        <DataGrid Grid.Row="0" Margin="20 10 20 0" CanUserSortColumns="False" Style="{DynamicResource DefaultDataGridStyle}"
                   SelectionMode="Single" ItemsSource="{Binding LineRateTotals}" IsReadOnly="True"
                   AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Line Rate" Width="100" Binding="{Binding LineRate}" />
+                <DataGridTextColumn Header="Line Rate" Width="120" Binding="{Binding LineRate}" />
                 <DataGridTextColumn Header="# Lines" HeaderStyle="{DynamicResource NumberColumnHeaderStyle}" CellStyle="{DynamicResource NumberCellStyle}"
-                                    Width="50" Binding="{Binding TotalLines}" />
+                                    Width="60" Binding="{Binding TotalLines}" />
                 <DataGridTextColumn Header="Pay" HeaderStyle="{DynamicResource NumberColumnHeaderStyle}" CellStyle="{DynamicResource NumberCellStyle}" 
-                                    Width="50" Binding="{Binding TotalPay, StringFormat=C}" />
+                                    Width="60" Binding="{Binding TotalPay, StringFormat=C}" />
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Grand Totals" Margin="0 0 50 0"  FontWeight="Bold" />
-            <TextBlock Text="{Binding GrandTotals.TotalLines}" Margin="0 0 15 0" FontWeight="Bold" />
-            <TextBlock Text="{Binding GrandTotals.TotalPay, StringFormat=C}" Margin="0 0 82 0" FontWeight="Bold" />
+            <TextBlock FontSize="16" Text="Grand Totals" Margin="0 0 55 0"  FontWeight="Bold" />
+            <TextBlock FontSize="16" Text="{Binding GrandTotals.TotalLines}" Margin="0 0 15 0" FontWeight="Bold" />
+            <TextBlock FontSize="16" Text="{Binding GrandTotals.TotalPay, StringFormat=C}" Margin="0 0 53 0" FontWeight="Bold" />
         </StackPanel>
     </Grid>
 </Window>

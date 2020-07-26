@@ -52,7 +52,7 @@
 
         <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
             <Border BorderThickness="0 0 0 1" BorderBrush="Gainsboro" Background="White" DockPanel.Dock="Top" Padding="0 0 0 5">
-                <StackPanel Orientation="Horizontal" >
+                <StackPanel Orientation="Horizontal">
                     <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource AddUserIcon}" ToolTip="Add New Profile" Command="{Binding AddProfileCommand}" />
                     <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource EditIcon}" ToolTip="Edit Current Profile" Command="{Binding EditProfileCommand}" />
                     <Button Style="{StaticResource TopMenuButtonStyle}" Content="{StaticResource OpenIcon}" ToolTip="Select A Profile" Command="{Binding SelectProfileCommand}" />
@@ -118,26 +118,36 @@
                     </DataGrid.InputBindings>
                     
                     <DataGrid.Columns>
-                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="200" Binding="{Binding LineRateType}" />
+                        <DataGridTextColumn Width="50" />
+                        <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Line Type" Width="150" Binding="{Binding LineRateType}" />
                         <DataGridTextColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Entered On" Width="150"  Binding="{Binding EnteredDate, StringFormat=d}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
-                                            Header="# Lines" Width="100" Binding="{Binding NumLines}" />
+                                            Header="# Lines" Width="125" Binding="{Binding NumLines}" />
                         <DataGridTextColumn HeaderStyle="{StaticResource NumberColumnHeaderStyle}" CellStyle="{StaticResource NumberCellStyle}" 
-                                            Header="Amount" Width="100" Binding="{Binding AmountEarned, StringFormat=C}" />
-                        <DataGridTemplateColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Action" Width="150" CanUserSort="False">
+                                            Header="Amount" Width="125" Binding="{Binding AmountEarned, StringFormat=C}" />
+                        <DataGridTemplateColumn CellStyle="{StaticResource DefaultCellStyle}" Header="Action" Width="196" CanUserSort="False">
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="Background" Value="SkyBlue" />
+                                    <Setter Property="BorderBrush" Value="Black" />
+                                    <Setter Property="BorderThickness" Value="0 0 0 1" />
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="30" />
                                             <ColumnDefinition Width="25" />
                                             <ColumnDefinition Width="30" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Column="0" Content="{StaticResource EditIcon}" ToolTip="Edit" Background="DodgerBlue" Cursor="Hand"
+                                        <Button Grid.Column="1" Content="{StaticResource EditIcon}" ToolTip="Edit" Background="DodgerBlue" Cursor="Hand"
                                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.EditLineRateEntryInLineCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
-                                        <Button Grid.Column="2" Content="{StaticResource TrashIcon}" ToolTip="Delete" Background="Tomato" Cursor="Hand"
+                                        <Button Grid.Column="3" Content="{StaticResource TrashIcon}" ToolTip="Delete" Background="Tomato" Cursor="Hand"
                                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.DeleteLineRateEntryInLineCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"    />
                                     </Grid>
@@ -157,10 +167,11 @@
                         </Style>
                     </DataGrid.CellStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="200" />
+                        <DataGridTextColumn Width="50" />
                         <DataGridTextColumn Width="150" />
-                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="100" Binding="{Binding TotalLines}" />
-                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="100" Binding="{Binding TotalPay, StringFormat=C}" />
+                        <DataGridTextColumn Width="150" />
+                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="125" Binding="{Binding TotalLines}" />
+                        <DataGridTextColumn CellStyle="{StaticResource NumberCellStyle}" Width="125" Binding="{Binding TotalPay, StringFormat=C}" />
                         <DataGridTextColumn Width="150" />
                     </DataGrid.Columns>
                 </DataGrid>
