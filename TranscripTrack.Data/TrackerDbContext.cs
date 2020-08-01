@@ -11,7 +11,7 @@ namespace TranscripTrack.Data
         public DbSet<LineRateEntry> LineRateEntries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
-        private static readonly string dbLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tracker.db");
+        private static readonly string dbLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "tracker.db");
         public TrackerDbContext()
         {
             Database.Migrate();
