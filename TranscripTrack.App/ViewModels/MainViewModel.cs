@@ -36,7 +36,7 @@ namespace TranscripTrack.App.ViewModels
 
         public MainViewModel()
         {
-            SelectProfileCommand = new RelayCommand(OpenSelectProfileModal);
+            SelectProfileCommand = new RelayCommand(OpenSelectProfileModal, CanSelectProfile);
             AddProfileCommand = new RelayCommand(OpenAddProfileModal);
             EditProfileCommand = new RelayCommand(OpenEditProfileModal, IsProfileLoaded);
             DeleteProfileCommand = new RelayCommand(ConfirmDeleteProfile, IsProfileLoaded);
@@ -96,6 +96,11 @@ namespace TranscripTrack.App.ViewModels
             }
         }
 
+        private bool CanSelectProfile()
+        {
+            return OtherProfileCount >= 1;
+        }
+
         private bool CanAddLineRateEntry()
         {
             return IsProfileLoaded() && (LineRates?.Any() == true);
@@ -146,6 +151,15 @@ namespace TranscripTrack.App.ViewModels
             set {
                 profile = value;
                 OnPropertyChanged("Profile");
+            }
+        }
+
+        private int otherProfileCount;
+        public int OtherProfileCount {
+            get => otherProfileCount;
+            set {
+                otherProfileCount = value;
+                OnPropertyChanged("OtherProfileCount");
             }
         }
 
@@ -205,6 +219,7 @@ namespace TranscripTrack.App.ViewModels
         {
             ProfileId = Properties.UserSettings.Default.CurrentProfileId;
             Profile = await App.ProfileDataService.GetModelAsync(ProfileId);
+            OtherProfileCount = await App.ProfileDataService.GetCountAsync(ProfileId);
 
             if (Profile is ProfileEditModel)
             {

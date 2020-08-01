@@ -101,5 +101,12 @@ namespace TranscripTrack.Logic
         {
             return await db.Profiles.CountAsync() > 0;
         }
+
+        public async Task<int> GetCountAsync(int idToExclude)
+        {
+            return await db.Profiles
+                .Where(p => p.ProfileId != idToExclude)
+                .CountAsync();
+        }
     }
 }
