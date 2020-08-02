@@ -101,12 +101,14 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\logo300x300.png" />
+    <Content Include="Images\logo24x24.png" />
+    <Content Include="Images\logo310x310.scale-200.png" />
+    <Content Include="Images\logo150x150.scale-200.png" />
     <Content Include="Images\logo310x150.png" />
     <Content Include="Images\logo50x50.png" />
-    <Content Include="Images\logo88x88.png" />
-    <Content Include="Images\logo89x89.png" />
-    <Content Include="Images\splashscreen1240x600.png" />
+    <Content Include="Images\logo71x71.png" />
+    <Content Include="Images\logo88x88.scale-200.png" />
+    <Content Include="Images\splashscreen1240x600.scale-200.png" />
     <None Include="Packaging_TemporaryKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
