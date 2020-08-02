@@ -101,13 +101,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\SplashScreen.scale-200.png" />
-    <Content Include="Images\LockScreenLogo.scale-200.png" />
-    <Content Include="Images\Square150x150Logo.scale-200.png" />
-    <Content Include="Images\Square44x44Logo.scale-200.png" />
-    <Content Include="Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Images\StoreLogo.png" />
-    <Content Include="Images\Wide310x150Logo.scale-200.png" />
+    <Content Include="Images\logo300x300.png" />
+    <Content Include="Images\logo310x150.png" />
+    <Content Include="Images\logo50x50.png" />
+    <Content Include="Images\logo88x88.png" />
+    <Content Include="Images\logo89x89.png" />
+    <Content Include="Images\splashscreen1240x600.png" />
     <None Include="Packaging_TemporaryKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>

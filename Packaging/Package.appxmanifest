@@ -14,7 +14,7 @@
   <Properties>
     <DisplayName>TranscripTrack</DisplayName>
     <PublisherDisplayName>Harvey Technologies</PublisherDisplayName>
-    <Logo>Images\StoreLogo.png</Logo>
+    <Logo>Images\logo50x50.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -34,10 +34,17 @@
         DisplayName="TranscripTrack"
         Description="Packaging"
         BackgroundColor="transparent"
-        Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
-        <uap:SplashScreen Image="Images\SplashScreen.png" />
+        Square150x150Logo="Images\logo300x300.png"
+        Square44x44Logo="Images\logo88x88.png">
+        <uap:DefaultTile Wide310x150Logo="Images\logo310x150.png"  Square310x310Logo="Images/logo300x300.png" Square71x71Logo="Images/logo89x89.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="Images\splashscreen1240x600.png" />
+        <uap:LockScreen BadgeLogo="Images/logo50x50.png" Notification="badgeAndTileText"/>
       </uap:VisualElements>
     </Application>
   </Applications>
