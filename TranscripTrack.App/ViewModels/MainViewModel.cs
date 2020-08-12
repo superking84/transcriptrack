@@ -226,12 +226,7 @@ namespace TranscripTrack.App.ViewModels
                 Application.Current.MainWindow.Title = $"TranscripTrack - {Profile.Name}";
                 
                 LineRates = await App.LineRateDataService.GetForProfileAsync(ProfileId);
-                if (!LineRates.Any())
-                {
-                    // if no line rates exist, prompt the user to create one or more
-                    OpenManageLineRatesModal();
-                }
-                else
+                if (LineRates.Any())
                 {
                     // there's no need to try to load LREs unless LRs exist
                     await LoadLineRateEntriesAsync();
@@ -306,6 +301,8 @@ namespace TranscripTrack.App.ViewModels
             if (ProfileId != Properties.UserSettings.Default.CurrentProfileId)
             {
                 await LoadCurrentProfileAsync();
+
+                OpenManageLineRatesModal();
             }
         }
 
