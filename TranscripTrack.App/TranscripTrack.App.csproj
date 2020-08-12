@@ -17,6 +17,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="splashscreen.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
@@ -29,6 +33,10 @@
   <ItemGroup>
     <ProjectReference Include="..\TranscripTrack.Data\TranscripTrack.Data.csproj" />
     <ProjectReference Include="..\TranscripTrack.Logic\TranscripTrack.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="splashscreen.jpg" />
   </ItemGroup>
 
   <ItemGroup>

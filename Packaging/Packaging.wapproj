@@ -108,7 +108,11 @@
     <Content Include="Images\logo50x50.png" />
     <Content Include="Images\logo71x71.png" />
     <Content Include="Images\logo88x88.scale-200.png" />
-    <Content Include="Images\splashscreen1240x600.scale-200.png" />
+    <Content Include="Images\splashscreen1400x780.scale-100.png" />
+    <Content Include="Images\splashscreen1400x780.scale-125.png" />
+    <Content Include="Images\splashscreen1400x780.scale-150.png" />
+    <Content Include="Images\splashscreen1400x780.scale-200.png" />
+    <Content Include="Images\splashscreen1400x780.scale-400.png" />
     <None Include="Packaging_TemporaryKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
