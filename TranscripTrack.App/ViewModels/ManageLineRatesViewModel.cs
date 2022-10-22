@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using TranscripTrack.Data.Models;
 
@@ -44,7 +45,11 @@ namespace TranscripTrack.App.ViewModels
 
         private async void SaveChangesAsync(Window window)
         {
-            await App.LineRateDataService.SaveChangesAsync(LineRates, Properties.UserSettings.Default.CurrentProfileId);
+            // Do not try to save any new blank entries
+            var lineRatesToSave = LineRates
+                .Where(lr => !string.IsNullOrWhiteSpace(lr.RateText))
+                .ToList();
+            await App.LineRateDataService.SaveChangesAsync(lineRatesToSave, Properties.UserSettings.Default.CurrentProfileId);
 
             window?.Close();
         }
