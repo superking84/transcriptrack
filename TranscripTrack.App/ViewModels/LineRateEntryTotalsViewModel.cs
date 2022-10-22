@@ -16,7 +16,7 @@ namespace TranscripTrack.App.ViewModels
             get => grandTotals;
             set {
                 grandTotals = value;
-                OnPropertyChanged("GrandTotals");
+                OnPropertyChanged(nameof(GrandTotals));
             }
         }
 
@@ -25,7 +25,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineRateTotals;
             set {
                 lineRateTotals = value;
-                OnPropertyChanged("LineRateTotals");
+                OnPropertyChanged(nameof(LineRateTotals));
             }
         }
 

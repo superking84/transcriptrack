@@ -18,7 +18,7 @@ namespace TranscripTrack.App.ViewModels
             get => currencies;
             set {
                 currencies = value;
-                OnPropertyChanged("Currencies");
+                OnPropertyChanged(nameof(Currencies));
             }
         }
 

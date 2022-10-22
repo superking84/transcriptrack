@@ -36,7 +36,7 @@ namespace TranscripTrack.App.ViewModels
             set {
                 profiles = value;
 
-                OnPropertyChanged("Profiles");
+                OnPropertyChanged(nameof(Profiles));
             }
         }
         public ProfileSelectTableModel SelectedProfile { get; set; }

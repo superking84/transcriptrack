@@ -17,7 +17,7 @@ namespace TranscripTrack.Data.Models
                 if (string.IsNullOrEmpty(value) || decimal.TryParse(value, out decimal _))
                 {
                     rateText = value;
-                    OnPropertyChanged("RateText");
+                    OnPropertyChanged(nameof(RateText));
                 }
             }
         }

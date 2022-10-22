@@ -15,7 +15,7 @@ namespace TranscripTrack.App.ViewModels
             get => selectedLineRate;
             set {
                 selectedLineRate = value;
-                OnPropertyChanged("SelectedLineRate");
+                OnPropertyChanged(nameof(SelectedLineRate));
             }
         }
 
@@ -54,7 +54,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineRates;
             set {
                 lineRates = value;
-                OnPropertyChanged("LineRates");
+                OnPropertyChanged(nameof(LineRates));
             }
         }
 

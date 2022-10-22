@@ -21,7 +21,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineRates;
             set {
                 lineRates = value;
-                OnPropertyChanged("LineRates");
+                OnPropertyChanged(nameof(LineRates));
             }
         }
 
@@ -30,7 +30,7 @@ namespace TranscripTrack.App.ViewModels
             get => model;
             set {
                 model = value;
-                OnPropertyChanged("Model");
+                OnPropertyChanged(nameof(Model));
             }
         }
 

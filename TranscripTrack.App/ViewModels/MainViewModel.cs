@@ -141,7 +141,7 @@ namespace TranscripTrack.App.ViewModels
             get => profileId;
             set {
                 profileId = value;
-                OnPropertyChanged("ProfileId");
+                OnPropertyChanged(nameof(ProfileId));
             }
         }
 
@@ -150,7 +150,7 @@ namespace TranscripTrack.App.ViewModels
             get => profile;
             set {
                 profile = value;
-                OnPropertyChanged("Profile");
+                OnPropertyChanged(nameof(Profile));
             }
         }
 
@@ -159,7 +159,7 @@ namespace TranscripTrack.App.ViewModels
             get => otherProfileCount;
             set {
                 otherProfileCount = value;
-                OnPropertyChanged("OtherProfileCount");
+                OnPropertyChanged(nameof(OtherProfileCount));
             }
         }
 
@@ -168,7 +168,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineRates;
             set {
                 lineRates = value;
-                OnPropertyChanged("LineRates");
+                OnPropertyChanged(nameof(LineRates));
             }
         }
 
@@ -177,7 +177,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineRateEntries;
             set {
                 lineRateEntries = value;
-                OnPropertyChanged("LineRateEntries");
+                OnPropertyChanged(nameof(LineRateEntries));
 
                 foreach (var entry in lineRateEntries)
                 {
@@ -191,7 +191,7 @@ namespace TranscripTrack.App.ViewModels
             get => selectedLineRateEntry;
             set {
                 selectedLineRateEntry = value;
-                OnPropertyChanged("SelectedLineRateEntry");
+                OnPropertyChanged(nameof(SelectedLineRateEntry));
             }
         }
         public bool CanDeleteEntry => SelectedLineRateEntry is LineRateEntryTableModel;
@@ -201,7 +201,7 @@ namespace TranscripTrack.App.ViewModels
             get => lineEntryDate;
             set {
                 lineEntryDate = value;
-                OnPropertyChanged("LineEntryDate");
+                OnPropertyChanged(nameof(LineEntryDate));
             }
         }
 
@@ -210,7 +210,7 @@ namespace TranscripTrack.App.ViewModels
             get => dailyTotals;
             set {
                 dailyTotals = value;
-                OnPropertyChanged("DailyTotals");
+                OnPropertyChanged(nameof(DailyTotals));
             }
         }
 

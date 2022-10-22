@@ -10,7 +10,7 @@ namespace TranscripTrack.App.ViewModels
             get => title;
             set {
                 title = value;
-                OnPropertyChanged("Title");
+                OnPropertyChanged(nameof(Title));
             }
         }
 

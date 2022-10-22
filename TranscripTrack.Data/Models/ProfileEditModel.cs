@@ -10,7 +10,7 @@
             get => name;
             set {
                 name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -18,7 +18,7 @@
             get => currencyId;
             set {
                 currencyId = value;
-                OnPropertyChanged("CurrencyId");
+                OnPropertyChanged(nameof(CurrencyId));
             }
         }
     }
