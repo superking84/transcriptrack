@@ -99,7 +99,7 @@ namespace TranscripTrack.Logic
 
         public async Task<bool> ExistAnyAsync()
         {
-            return await db.Profiles.CountAsync() > 0;
+            return await db.Profiles.AnyAsync();
         }
 
         public async Task<int> GetCountAsync(int idToExclude)
